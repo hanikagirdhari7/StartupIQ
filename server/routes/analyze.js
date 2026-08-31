@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { analyzeIdea, getActiveProvider } from '../ai/index.js'
 import { redactSecrets } from '../ai/config.js'
+import { analysisRateLimit } from '../middleware/analysisRateLimit.js'
 import { ANALYSIS_RESPONSE_SCHEMA } from '../schemas/analysisResponse.js'
 import { validateIdeaSubmission } from '../validation/ideaSubmission.js'
 
@@ -21,7 +22,7 @@ function toSafeFailure(err) {
   return SAFE_ERRORS[err?.code] || SAFE_ERRORS.AI_REQUEST_FAILED
 }
 
-router.post('/analyze', async (req, res) => {
+router.post('/analyze', analysisRateLimit, async (req, res) => {
   const { valid, errors, data } = validateIdeaSubmission(req.body)
 
   if (!valid) {
