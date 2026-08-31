@@ -175,11 +175,3 @@ export function clearReports() {
   removeStore(store)
   return true
 }
-
-export function formatSavedAt(savedAt) {
-  const stamp = Number(savedAt)
-  if (!Number.isFinite(stamp)) return ''
-  const date = new Date(stamp)
-  if (Number.isNaN(date.getTime())) return ''
-  return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
-}

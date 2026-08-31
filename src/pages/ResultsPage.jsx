@@ -8,6 +8,7 @@ import ListCard from '../components/dashboard/ListCard'
 import RecentReportsCard from '../components/dashboard/RecentReportsCard'
 import ReportHeader from '../components/dashboard/ReportHeader'
 import RoadmapCard from '../components/dashboard/RoadmapCard'
+import ScoreBreakdownCard from '../components/dashboard/ScoreBreakdownCard'
 import ScoreCard from '../components/dashboard/ScoreCard'
 import SourcingCard from '../components/dashboard/SourcingCard'
 import { getLatestReport, getReport, saveReport } from '../services/storage'
@@ -63,6 +64,8 @@ export default function ResultsPage() {
           <ReportHeader idea={idea} meta={report} />
           <ScoreCard score={analysis.viabilityScore} />
 
+          <ScoreBreakdownCard analysis={analysis} idea={idea} />
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <InsightCard title="Market Demand" badge={<LevelBadge level={market.level} />}>
               <InsightRow label="Why this level">{market.explanation}</InsightRow>
@@ -86,7 +89,7 @@ export default function ResultsPage() {
             </InsightCard>
           </div>
 
-          <FinancialFitCard financialFit={analysis.financialFit} budget={idea.budgetPKR} />
+          <FinancialFitCard key={currentId} financialFit={analysis.financialFit} budget={idea.budgetPKR} />
 
           <SourcingCard sourcing={sourcing} location={idea.location} />
 

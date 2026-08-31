@@ -1,23 +1,13 @@
-function formatBudget(amount) {
-  const value = Number(amount)
-  return Number.isFinite(value) ? `PKR ${value.toLocaleString('en-US')}` : 'Not provided'
-}
-
-function formatAnalyzedAt(iso) {
-  if (!iso) return null
-  const date = new Date(iso)
-  if (Number.isNaN(date.getTime())) return null
-  return date.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
-}
+import { formatDateTime, formatPKR } from '../../utils/format'
 
 export default function ReportHeader({ idea, meta }) {
-  const analyzedAt = formatAnalyzedAt(meta && meta.analyzedAt)
+  const analyzedAt = formatDateTime(meta && meta.analyzedAt)
 
   const facts = [
     { label: 'Target customer', value: idea.targetCustomer || 'Not provided' },
     { label: 'Market', value: idea.location || 'Not provided' },
     { label: 'Business type', value: idea.businessType || 'Not provided' },
-    { label: 'Budget', value: formatBudget(idea.budgetPKR) },
+    { label: 'Budget', value: formatPKR(idea.budgetPKR, 'Not provided') },
   ]
 
   return (

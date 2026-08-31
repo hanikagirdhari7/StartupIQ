@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import ScenarioCalculator from './ScenarioCalculator'
+import { formatPKR as money } from '../../utils/format'
 
 const STATUS = {
   goodToTest: {
@@ -16,14 +18,6 @@ const STATUS = {
     dot: '🔴',
     classes: 'bg-rose-50 text-rose-700 border-rose-200',
   },
-}
-
-function money(value) {
-  const number = Number(value)
-  if (!Number.isFinite(number)) return '—'
-  const rounded = Math.round(number)
-  const sign = rounded < 0 ? '-' : ''
-  return `${sign}PKR ${Math.abs(rounded).toLocaleString('en-US')}`
 }
 
 function figure(value) {
@@ -198,6 +192,8 @@ export default function FinancialFitCard({ financialFit, budget }) {
           )}
         </div>
       )}
+
+      <ScenarioCalculator financialFit={financialFit} budget={budget} />
 
       <p className="mt-4 text-xs text-slate-400 leading-relaxed">
         Every figure marked as an estimate is the AI&apos;s reasonable guess from what you described,

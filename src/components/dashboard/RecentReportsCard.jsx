@@ -1,11 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { deleteReport, formatSavedAt, listReports } from '../../services/storage'
-
-function money(amount) {
-  const value = Number(amount)
-  return Number.isFinite(value) ? `PKR ${value.toLocaleString('en-US')}` : 'Budget not given'
-}
+import { deleteReport, listReports } from '../../services/storage'
+import { formatDate, formatPKR } from '../../utils/format'
 
 export default function RecentReportsCard({ currentId }) {
   const [reports, setReports] = useState(() => listReports())
@@ -32,8 +28,8 @@ export default function RecentReportsCard({ currentId }) {
           const meta = [
             entry.summary.businessType,
             entry.summary.location,
-            money(entry.summary.budgetPKR),
-            `Saved ${formatSavedAt(entry.savedAt) || 'recently'}`,
+            formatPKR(entry.summary.budgetPKR, 'Budget not given'),
+            `Saved ${formatDate(entry.savedAt) || 'recently'}`,
           ]
 
           return (
