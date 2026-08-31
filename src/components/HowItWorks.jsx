@@ -1,0 +1,65 @@
+const steps = [
+  {
+    number: '01',
+    icon: '💡',
+    title: 'Enter Your Idea',
+    description:
+      'Describe your business idea in plain language. No jargon needed — just tell us what you want to sell or offer.',
+  },
+  {
+    number: '02',
+    icon: '🔍',
+    title: 'Analyze Your Market',
+    description:
+      'Our AI scans market data, competitor activity, and demand signals to understand the landscape for your idea.',
+  },
+  {
+    number: '03',
+    icon: '📊',
+    title: 'Understand Your Potential',
+    description:
+      'Get your Viability Score, strengths, risks, and a clear breakdown of profit potential and target audience.',
+  },
+  {
+    number: '04',
+    icon: '🚀',
+    title: 'Get Your Launch Plan',
+    description:
+      'Receive a step-by-step action plan including sourcing options, pricing strategy, and your first 30-day roadmap.',
+  },
+]
+
+export default function HowItWorks() {
+  return (
+    <section id="how-it-works" className="py-20 bg-white">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <p className="text-indigo-600 font-semibold text-sm uppercase tracking-widest mb-3">Simple Process</p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">How It Works</h2>
+          <p className="text-slate-600 max-w-xl mx-auto">
+            Four clear steps from idea to launch-ready plan — no experience required.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {steps.map((step, idx) => (
+            <div key={step.number} className="relative">
+              {/* Connector line */}
+              {idx < steps.length - 1 && (
+                <div className="hidden lg:block absolute top-10 left-[calc(100%+1px)] w-full h-0.5 bg-gradient-to-r from-indigo-200 to-transparent z-0" />
+              )}
+              <div className="relative z-10 bg-slate-50 hover:bg-indigo-50 border border-slate-100 hover:border-indigo-200 rounded-2xl p-6 h-full transition-colors group">
+                <div className="text-3xl mb-4">{step.icon}</div>
+                <span className="text-xs font-bold text-indigo-400 tracking-widest uppercase">Step {step.number}</span>
+                <h3 className="text-lg font-bold text-slate-900 mt-1 mb-2 group-hover:text-indigo-700 transition-colors">
+                  {step.title}
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed">{step.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
