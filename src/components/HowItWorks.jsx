@@ -4,7 +4,7 @@ const steps = [
     icon: '💡',
     title: 'Enter Your Idea',
     description:
-      'Describe your business idea in plain language. No jargon needed — just tell us what you want to sell or offer.',
+      'Describe your business idea in plain language. No jargon needed. Just tell us what you want to sell or offer.',
   },
   {
     number: '02',
@@ -37,7 +37,7 @@ export default function HowItWorks() {
           <p className="text-indigo-600 font-semibold text-sm uppercase tracking-widest mb-3">Simple Process</p>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">How It Works</h2>
           <p className="text-slate-600 max-w-xl mx-auto">
-            Four clear steps from idea to launch-ready plan — no experience required.
+            Four clear steps from idea to launch-ready plan. No experience required.
           </p>
           <p className="text-xs text-slate-500 max-w-2xl mx-auto mt-3 leading-relaxed">
             StartupIQ works from what you tell us. It does not pull live market data, browse competitor

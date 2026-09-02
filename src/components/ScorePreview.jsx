@@ -64,24 +64,24 @@ function SubScore({ label, value, basis }) {
 }
 
 // Only values the real derivation rules can emit (see utils/subScores.js):
-// demand high=85, competition moderate=60, a 41% margin=70, setup at 42% of
+// demand high=85, competition high=35, a 35% margin=70, setup at 45% of
 // budget=70. Growth gets no returning figure, so it stays unscored.
 const SAMPLE_SCORES = [
   { label: 'Market Demand', value: 85, basis: 'Market demand level: high.' },
   {
     label: 'Competition',
-    value: 60,
-    basis: 'Higher means more room to enter. Competition level: moderate.',
+    value: 35,
+    basis: 'Higher means more room to enter. Competition level: high.',
   },
   {
     label: 'Profit Potential',
     value: 70,
-    basis: 'About 41% of each sale is left after its full cost — before marketing, rent and your own time.',
+    basis: 'About 35% of each sale is left after its full cost — before marketing, rent and your own time.',
   },
   {
     label: 'Ease of Entry',
     value: 70,
-    basis: 'Setup costs are about 42% of the starting budget.',
+    basis: 'Setup costs are about 45% of the starting budget.',
   },
   {
     label: 'Long-term Growth',
@@ -94,8 +94,8 @@ const SAMPLE_SCORES = [
 const SAMPLE_SUBMISSION = [
   { label: 'Business type', value: 'Ecommerce' },
   { label: 'Location', value: 'Lahore, Pakistan' },
-  { label: 'Budget', value: 'PKR 120,000' },
-  { label: 'Target customer', value: 'Gift buyers aged 25–40' },
+  { label: 'Budget', value: 'PKR 150,000' },
+  { label: 'Target customer', value: 'Women aged 18–35' },
 ]
 
 export default function ScorePreview() {
@@ -120,7 +120,7 @@ export default function ScorePreview() {
                 Overall viability
               </p>
               <div className="bg-white rounded-full p-2.5 sm:p-3 shadow-sm ring-1 ring-slate-100 flex items-center justify-center">
-                <ScoreMeter value={74} />
+                <ScoreMeter value={78} />
               </div>
               <span className="mt-6 inline-block bg-indigo-50 border border-indigo-200 text-indigo-700 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
                 Strong Potential
@@ -135,7 +135,7 @@ export default function ScorePreview() {
             <div className="flex-1 min-w-0">
               <h3 className="text-base font-bold text-slate-900 mb-1">Business Score Breakdown</h3>
               <p className="text-sm text-slate-500 mb-5 text-pretty">
-                Five readings from the same report, worked out with fixed rules — not extra opinions.
+                Five readings from the same report, worked out with fixed rules, not extra opinions.
               </p>
               <ul className="divide-y divide-slate-100">
                 {SAMPLE_SCORES.map(row => (

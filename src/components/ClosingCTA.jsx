@@ -10,9 +10,9 @@ export default function ClosingCTA() {
           Stop Guessing. Start Knowing.
         </h2>
         <p className="text-indigo-100 text-lg mb-9 leading-relaxed text-pretty">
-          Your next business could be your best one — but only if you validate it first.
-          Enter your idea and get a complete report — score, unit economics, risks and a launch
-          plan. It usually takes a minute or two.
+          Your next business could be your best one, but only if you validate it first. Enter your
+          idea to get a complete report with your score, unit economics, risks, and launch plan. It
+          usually takes a minute or two.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">

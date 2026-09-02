@@ -66,16 +66,16 @@ export default function DashboardPreview() {
               <div className="min-w-0">
                 <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Business idea</p>
                 <h3 className="text-xl font-bold text-slate-900 leading-snug text-balance break-words">
-                  “Handmade Leather Accessories Store”
+                  “Online Women’s Clothing Boutique”
                 </h3>
                 <p className="text-sm text-slate-500 mt-1 break-words">
-                  Ecommerce · Lahore, Pakistan · Budget PKR 120,000
+                  Ecommerce · Lahore, Pakistan · Budget PKR 150,000
                 </p>
               </div>
               <div className="bg-indigo-50 border border-indigo-200 rounded-xl px-5 py-3 shrink-0 text-center sm:text-right">
                 <p className="text-[11px] text-indigo-500 font-bold uppercase tracking-wider">Viability Score</p>
                 <p className="text-4xl font-extrabold text-indigo-700 leading-none tabular-nums">
-                  74<span className="text-base font-bold text-indigo-400">/100</span>
+                  78<span className="text-base font-bold text-indigo-400">/100</span>
                 </p>
               </div>
             </div>
@@ -83,9 +83,9 @@ export default function DashboardPreview() {
             {/* Metric cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <MetricCard label="Market Demand" value="High" trend="85/100 in the breakdown" tone="emerald" />
-              <MetricCard label="Competition" value="Moderate" trend="60/100 — room to enter" tone="amber" />
-              <MetricCard label="Margin per Sale" value="PKR 1,850" trend="≈41% after its full cost" tone="emerald" />
-              <MetricCard label="Break-even" value="28 sales" trend="Covers PKR 50,000 setup" tone="slate" />
+              <MetricCard label="Competition" value="High" trend="35/100 in a crowded market" tone="amber" />
+              <MetricCard label="Margin per Sale" value="PKR 2,100" trend="35% after its full cost" tone="emerald" />
+              <MetricCard label="Break-even" value="32 sales" trend="Covers PKR 67,000 setup" tone="slate" />
             </div>
 
             {/* Insights */}
@@ -94,19 +94,19 @@ export default function DashboardPreview() {
                 icon="✅"
                 label="Demand"
                 type="strength"
-                text="High demand in gifting & lifestyle niches on Daraz & social media"
+                text="Strong demand for affordable, trend-led women’s fashion through Instagram, TikTok and online marketplaces."
               />
               <InsightRow
                 icon="⚠️"
                 label="Risk"
                 type="risk"
-                text="Pricing pressure from Chinese imports — differentiate on quality and story"
+                text="The market is crowded and price-sensitive. Product selection, sizing consistency and reliable delivery need to stand out."
               />
               <InsightRow
                 icon="💡"
                 label="Action"
                 type="tip"
-                text="Start with Instagram + WhatsApp before investing in a full website"
+                text="Start with a focused collection and small inventory. Test demand through Instagram and WhatsApp, then scale the best-selling styles."
               />
             </div>
 
@@ -115,7 +115,7 @@ export default function DashboardPreview() {
               <div className="blur-sm pointer-events-none select-none p-5">
                 <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Your Launch Roadmap</p>
                 <div className="space-y-2">
-                  {['Week 1: Validate with 10 potential customers via Instagram DMs', 'Week 2: Source materials from Liberty Market or Alibaba (3 suppliers compared)', 'Week 3: Create product photos & launch Daraz storefront', 'Week 4: Run first PKR 2,000 ad campaign — target gifting audience'].map(item => (
+                  {['Week 1: Validate with 10 potential customers via Instagram DMs', 'Week 2: Compare 3 wholesale clothing suppliers on price and sizing', 'Week 3: Create product photos & launch Daraz storefront', 'Week 4: Run first PKR 2,000 ad campaign targeting women aged 18–35'].map(item => (
                     <div key={item} className="flex items-center gap-2 text-sm text-slate-700">
                       <span className="w-4 h-4 rounded-full border-2 border-indigo-300 shrink-0" />
                       {item}
