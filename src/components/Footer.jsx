@@ -1,4 +1,8 @@
-export default function Footer() {
+// The landing page shows sample dashboards, so it needs the illustrative wording by
+// default. Pages backed by a real analysis pass their own copy instead.
+export default function Footer({
+  disclaimer = 'Sample scores and dashboards shown are illustrative only and do not represent real business analysis.',
+}) {
   return (
     <footer className="bg-slate-900 text-slate-400 py-12">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,7 +27,7 @@ export default function Footer() {
 
         <div className="mt-8 pt-6 border-t border-slate-800 text-center text-xs text-slate-600">
           © {new Date().getFullYear()} StartupIQ. All rights reserved. &nbsp;·&nbsp;
-          Sample scores and dashboards shown are illustrative only and do not represent real business analysis.
+          {disclaimer}
         </div>
       </div>
     </footer>

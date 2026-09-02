@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
+import DecisionCard from '../components/dashboard/DecisionCard'
 import FinancialFitCard from '../components/dashboard/FinancialFitCard'
 import InsightCard, { InsightRow, LevelBadge } from '../components/dashboard/InsightCard'
 import ListCard from '../components/dashboard/ListCard'
@@ -74,7 +75,7 @@ export default function ResultsPage() {
 
             <InsightCard title="Competition" badge={<LevelBadge level={competition.level} tone="risk" />}>
               <InsightRow label="Existing alternatives">{competition.existingAlternatives}</InsightRow>
-              <InsightRow label="How you can differentiate">{competition.differentiation}</InsightRow>
+              <InsightRow label="Startup opportunity">{competition.differentiation}</InsightRow>
             </InsightCard>
 
             <InsightCard title="Target Customer">
@@ -106,6 +107,8 @@ export default function ResultsPage() {
             variant="actions"
             ordered
           />
+
+          <DecisionCard analysis={analysis} idea={idea} />
 
           <RecentReportsCard currentId={currentId} />
 
@@ -139,7 +142,7 @@ export default function ResultsPage() {
           </p>
         </div>
       </main>
-      <Footer />
+      <Footer disclaimer="AI-generated guidance based on the information provided. Verify key assumptions and figures before making business or financial decisions." />
     </div>
   )
 }

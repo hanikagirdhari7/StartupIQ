@@ -25,6 +25,14 @@ function finite(value) {
   return Number.isFinite(number) ? number : null
 }
 
+// Financial Fit shows "Not enough information to estimate reliably" for a fixedCosts
+// that is not a real number — and a model can send "" or "0" when it has no idea.
+// finite() would coerce those to 0 and score an unknown setup as a free one, so this
+// mirrors that stricter rule to keep the two cards telling the same story.
+function aiFigure(value) {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : null
+}
+
 function band(score) {
   return score === null ? null : Math.min(100, Math.max(0, Math.round(score)))
 }
@@ -55,7 +63,7 @@ export function deriveSubScores(analysis, idea) {
   const budget = finite(idea && idea.budgetPKR)
   const price = finite(fit.priceEstimate)
   const cost = finite(fit.costEstimate)
-  const fixed = finite(fit.fixedCosts)
+  const fixed = aiFigure(fit.fixedCosts)
   const hasEstimates = price !== null && cost !== null && price > 0
 
   const demandScore = DEMAND_SCORES[levelKey(market.level)] || null
@@ -95,7 +103,7 @@ export function deriveSubScores(analysis, idea) {
       label: 'Ease of Entry',
       score: band(setupRatio === null ? null : entryScore(setupRatio)),
       basis: setupRatio === null
-        ? 'Needs your budget plus a fixed setup cost estimate. When setup costs are unknown this stays empty rather than guessed.'
+        ? 'Not enough fixed setup-cost information to calculate this score reliably. Without a usable setup cost against your starting budget, this stays unscored rather than guessed.'
         : `Derived from the numbers above: setup costs are about ${Math.round(setupRatio * 100)}% of your starting budget.`,
     },
     {

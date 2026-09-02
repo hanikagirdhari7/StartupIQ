@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from '@google/genai'
-import { aiConfig } from '../config.js'
+import { aiConfig, redactSecrets } from '../config.js'
 import { buildAnalysisPrompt } from '../prompt.js'
 import { parseModelJson } from '../parseModelJson.js'
 import { assertValidAnalysis } from '../schemaGuard.js'
@@ -158,7 +158,27 @@ function safeError(message, code) {
 // Map SDK/API failures onto safe codes. The raw error is never forwarded —
 // Google reports a bad key as HTTP 400 carrying 'API_KEY_INVALID', so the reason
 // text is inspected to keep "your key is wrong" distinct from a generic failure.
+// Provider diagnostics only. classifyFailure replaces the SDK error, so this is
+// the last moment the original name/status/cause still exist. Values are run
+// through redactSecrets and flattened to one short line, so a key, a prompt or a
+// multi-line payload cannot reach the log or forge an extra record.
+function one(value, max = 60) {
+  const text = String(value ?? '').replace(/\s+/g, ' ').trim()
+  if (!text) return 'none'
+  return text.length > max ? `${text.slice(0, max)}…` : text
+}
+
+function logRawFailure(err) {
+  const cause = (err && err.cause) || {}
+  console.error(
+    `${new Date().toISOString()} [gemini] raw failure name=${one(err?.name)} status=${one(err?.status ?? err?.code)} ` +
+      `message=${one(redactSecrets(err?.message), 200)} causeName=${one(cause.name)} ` +
+      `causeCode=${one(cause.code)} causeMessage=${one(redactSecrets(cause.message), 200)}`
+  )
+}
+
 function classifyFailure(err) {
+  logRawFailure(err)
   const status = err?.status ?? err?.code ?? err?.response?.status
   const numeric = typeof status === 'string' && /^\d+$/.test(status) ? Number(status) : status
   const detail = String(err?.message ?? '')

@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { randomUUID } from 'node:crypto'
 import { analyzeIdea, getActiveProvider } from '../ai/index.js'
 import { redactSecrets } from '../ai/config.js'
 import { analysisRateLimit } from '../middleware/analysisRateLimit.js'
@@ -22,7 +23,38 @@ function toSafeFailure(err) {
   return SAFE_ERRORS[err?.code] || SAFE_ERRORS.AI_REQUEST_FAILED
 }
 
+// Provider-supplied values are echoed into the log, so each is flattened to one
+// short line: a multi-line or oversized error could otherwise forge new records.
+function logField(value, max = 60) {
+  const text = String(value ?? '').replace(/\s+/g, ' ').trim()
+  if (!text) return 'none'
+  return text.length > max ? `${text.slice(0, max)}…` : text
+}
+
+function secondsSince(startedAt) {
+  return `${((Date.now() - startedAt) / 1000).toFixed(1)}s`
+}
+
+// UTC so a line can be placed on the wall clock without guessing the operator's
+// offset. Local time here is UTC-04:00.
+function stamp() {
+  return new Date().toISOString()
+}
+
 router.post('/analyze', analysisRateLimit, async (req, res) => {
+  // One id per request: without it, a slow provider call, an upstream failure
+  // and an extra submission all read the same in the log.
+  const requestId = randomUUID().slice(0, 8)
+  const startedAt = Date.now()
+  // One closing line per request, whatever path answered it: status and byte
+  // count come from the finished response, so nothing has to be threaded through
+  // the handlers below.
+  res.on('finish', () => {
+    console.log(
+      `${stamp()} [analyze] ${requestId} responded status=${res.statusCode} ` +
+        `bytes=${res.bytesWritten ?? 'unknown'} elapsed=${secondsSince(startedAt)}`
+    )
+  })
   const { valid, errors, data } = validateIdeaSubmission(req.body)
 
   if (!valid) {
@@ -40,7 +72,7 @@ router.post('/analyze', analysisRateLimit, async (req, res) => {
     // Selected a provider but it is not configured — surface that clearly rather
     // than pretending the analysis simply came back empty.
     if (active.status === 'misconfigured') {
-      console.error(`[analyze] ${redactSecrets(active.reason)}`)
+      console.error(`${stamp()} [analyze] ${requestId} ${redactSecrets(active.reason)}`)
       return res.status(503).json({
         success: false,
         error: 'AI_CONFIGURATION_ERROR',
@@ -63,8 +95,9 @@ router.post('/analyze', analysisRateLimit, async (req, res) => {
   }
 
   try {
+    console.log(`${stamp()} [analyze] ${requestId} accepted provider=${active.provider.id} model=${active.model}`)
     const analysis = await analyzeIdea(data)
-    console.log(`[analyze] ${active.provider.id} succeeded for model ${active.model}`)
+    console.log(`${stamp()} [analyze] ${requestId} ${active.provider.id} succeeded in ${secondsSince(startedAt)}`)
     return res.status(200).json({
       success: true,
       provider: active.provider.id,
@@ -75,7 +108,11 @@ router.post('/analyze', analysisRateLimit, async (req, res) => {
     })
   } catch (err) {
     const safe = toSafeFailure(err)
-    console.error(`[analyze] ${active.provider.id} failed (${err?.code || 'UNKNOWN'}): ${redactSecrets(err?.message)}`)
+    console.error(
+      `${stamp()} [analyze] ${requestId} ${active.provider.id} failed (${err?.code || 'UNKNOWN'}) ` +
+      `name=${logField(err?.name)} status=${logField(err?.status)} after ${secondsSince(startedAt)}: ` +
+      logField(redactSecrets(err?.message), 240)
+    )
     return res.status(safe.status).json({ success: false, error: safe.code, message: safe.message })
   }
 })

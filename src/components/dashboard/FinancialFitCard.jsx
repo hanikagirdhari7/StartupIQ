@@ -24,17 +24,10 @@ function figure(value) {
   return typeof value === 'number' && Number.isFinite(value) ? value : null
 }
 
-function Row({ label, value, estimated, muted }) {
+function Row({ label, value, muted }) {
   return (
     <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3 border-b border-slate-100 last:border-0">
-      <dt className="text-sm text-slate-500">
-        {label}
-        {estimated && (
-          <span className="ml-2 text-[10px] font-bold uppercase tracking-wider text-indigo-500">
-            AI estimate
-          </span>
-        )}
-      </dt>
+      <dt className="text-sm text-slate-500">{label}</dt>
       <dd className={`text-base font-extrabold ${muted ? 'text-slate-400 font-semibold text-sm' : 'text-slate-900'}`}>
         {value}
       </dd>
@@ -101,34 +94,36 @@ export default function FinancialFitCard({ financialFit, budget }) {
         <Row
           label={data.priceLabel || 'Estimated income'}
           value={price === null ? 'Not estimated' : money(price)}
-          estimated={price !== null}
           muted={price === null}
         />
         <Row
           label={data.costLabel || 'Estimated cost'}
           value={cost === null ? 'Not estimated' : money(cost)}
-          estimated={cost !== null}
           muted={cost === null}
         />
         <Row
           label={profitLabel}
           value={profit === null ? 'Not estimated' : money(profit)}
-          estimated={profit !== null}
           muted={profit === null}
         />
         <Row
           label="Fixed setup costs (before your first revenue)"
           value={fixed === null ? 'Not enough information to estimate reliably' : money(fixed)}
-          estimated={fixed !== null}
           muted={fixed === null}
         />
         <Row
           label="Break-even"
           value={breakEven || 'Cannot be estimated reliably yet'}
-          estimated={Boolean(breakEven)}
           muted={!breakEven}
         />
       </dl>
+
+      <p className="mt-4 text-xs text-slate-500 leading-relaxed">
+        <span className="font-semibold text-slate-700">AI-generated estimates: </span>
+        Pricing and cost figures are estimates based on the information provided and should be
+        validated with suppliers and current market prices. These figures are guidance, not verified
+        live market data.
+      </p>
 
       {breakEvenGap && (
         <p className="mt-3 text-sm text-slate-500 leading-relaxed">{breakEvenGap}</p>
@@ -196,9 +191,7 @@ export default function FinancialFitCard({ financialFit, budget }) {
       <ScenarioCalculator financialFit={financialFit} budget={budget} />
 
       <p className="mt-4 text-xs text-slate-400 leading-relaxed">
-        Every figure marked as an estimate is the AI&apos;s reasonable guess from what you described,
-        not a verified market price. Nothing here guarantees a sale, a margin or a profit — confirm
-        real costs with suppliers or service providers before you spend.
+        Nothing here guarantees a sale, a margin or a profit.
       </p>
     </section>
   )
