@@ -21,8 +21,8 @@ export default function Hero() {
         </h1>
 
         <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-          StartupIQ analyzes your business idea using AI-driven insights to tell you
-          what works, what doesn&apos;t, and exactly how to launch — so you stop guessing
+          StartupIQ analyzes your business idea using AI-driven insights to show you
+          what works, what doesn&apos;t, and how to plan your first steps — so you stop guessing
           and start building with confidence.
         </p>
 
@@ -41,7 +41,7 @@ export default function Hero() {
           </a>
         </div>
 
-        <p className="mt-6 text-sm text-slate-400">No credit card required &nbsp;·&nbsp; Results in under 2 minutes</p>
+        <p className="mt-6 text-sm text-slate-400">No credit card required &nbsp;·&nbsp; Analysis usually takes a minute or two</p>
       </div>
     </section>
   )

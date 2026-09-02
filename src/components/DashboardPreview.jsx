@@ -34,12 +34,13 @@ export default function DashboardPreview() {
             Everything You Need in One Place
           </h2>
           <p className="text-slate-600 max-w-xl mx-auto">
-            Your full analysis dashboard — clear metrics, actionable insights, and a ready-to-execute launch plan.
+            A report covers market demand, competition, pricing, financial fit, sourcing and a launch
+            roadmap — all estimated from what you describe.
           </p>
         </div>
 
         <div className="flex justify-center mb-6">
-          <span className="bg-amber-50 border border-amber-300 text-amber-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest">
+          <span className="bg-amber-50 border border-amber-300 text-amber-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest text-center">
             Sample / Illustrative Preview — Not Real Data
           </span>
         </div>
@@ -51,7 +52,7 @@ export default function DashboardPreview() {
             <div className="w-3 h-3 rounded-full bg-rose-400" />
             <div className="w-3 h-3 rounded-full bg-amber-400" />
             <div className="w-3 h-3 rounded-full bg-emerald-400" />
-            <span className="ml-3 text-slate-400 text-xs font-mono">startupiq.app/results/my-idea</span>
+            <span className="ml-3 text-slate-400 text-xs font-mono">startupiq.app/results</span>
           </div>
 
           <div className="p-6 sm:p-8">
@@ -60,7 +61,7 @@ export default function DashboardPreview() {
               <div>
                 <p className="text-xs text-slate-500 mb-1">Analyzing idea:</p>
                 <h3 className="text-xl font-bold text-slate-900">"Handmade Leather Accessories Store"</h3>
-                <p className="text-sm text-slate-500 mt-1">E-commerce · Pakistan · B2C</p>
+                <p className="text-sm text-slate-500 mt-1">Ecommerce · Lahore, Pakistan · Budget PKR 120,000</p>
               </div>
               <div className="flex items-center gap-3 bg-indigo-50 border border-indigo-200 rounded-xl px-5 py-3 shrink-0">
                 <div>
@@ -72,11 +73,11 @@ export default function DashboardPreview() {
             </div>
 
             {/* Metric cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-              <MetricCard label="Market Size" value="$2.4B" trend="↑ Growing 12%/yr" trendUp />
-              <MetricCard label="Competitors" value="142" trend="Moderate competition" trendUp={false} />
-              <MetricCard label="Avg. Margin" value="58%" trend="↑ Above average" trendUp />
-              <MetricCard label="Time to Launch" value="3–5 wks" trend="Quick entry possible" trendUp />
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
+              <MetricCard label="Market Demand" value="High" trend="85/100 in the breakdown" trendUp />
+              <MetricCard label="Competition" value="Moderate" trend="60/100 room to enter" trendUp={false} />
+              <MetricCard label="Profit per Sale" value="PKR 1,850" trend="≈41% of each sale" trendUp />
+              <MetricCard label="Break-even" value="28 sales" trend="Covers PKR 50,000 setup" trendUp={false} />
             </div>
 
             {/* Insights */}
@@ -89,7 +90,7 @@ export default function DashboardPreview() {
             {/* Blurred launch plan teaser */}
             <div className="relative rounded-xl border border-slate-100 overflow-hidden">
               <div className="blur-sm pointer-events-none select-none p-5">
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Your 30-Day Launch Roadmap</p>
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Your Launch Roadmap</p>
                 <div className="space-y-2">
                   {['Week 1: Validate with 10 potential customers via Instagram DMs', 'Week 2: Source materials from Liberty Market or Alibaba (3 suppliers compared)', 'Week 3: Create product photos & launch Daraz storefront', 'Week 4: Run first Rs.2000 ad campaign — target gifting audience'].map(item => (
                     <div key={item} className="flex items-center gap-2 text-sm text-slate-700">
@@ -112,7 +113,7 @@ export default function DashboardPreview() {
         </div>
 
         <p className="text-center text-xs text-slate-400 mt-4">
-          * This preview uses fictional data. Your actual dashboard will reflect your real business idea and market.
+          * This preview uses fictional data. Your actual report is built from the idea and details you enter.
         </p>
       </div>
     </section>

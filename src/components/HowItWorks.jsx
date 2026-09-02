@@ -9,9 +9,9 @@ const steps = [
   {
     number: '02',
     icon: '🔍',
-    title: 'Analyze Your Market',
+    title: 'Structured AI Analysis',
     description:
-      'Our AI scans market data, competitor activity, and demand signals to understand the landscape for your idea.',
+      'Your idea is examined against a structured business framework — demand, competition, pricing, and startup costs — using what you described and general knowledge of the category.',
   },
   {
     number: '03',
@@ -25,7 +25,7 @@ const steps = [
     icon: '🚀',
     title: 'Get Your Launch Plan',
     description:
-      'Receive a step-by-step action plan including sourcing options, pricing strategy, and your first 30-day roadmap.',
+      'Receive a step-by-step action plan including sourcing options, pricing strategy, and a phased launch roadmap.',
   },
 ]
 
@@ -38,6 +38,10 @@ export default function HowItWorks() {
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">How It Works</h2>
           <p className="text-slate-600 max-w-xl mx-auto">
             Four clear steps from idea to launch-ready plan — no experience required.
+          </p>
+          <p className="text-xs text-slate-500 max-w-2xl mx-auto mt-3 leading-relaxed">
+            StartupIQ works from what you tell us. It does not pull live market data, browse competitor
+            listings, or verify prices — every figure is an AI estimate to check before you spend money.
           </p>
         </div>
 

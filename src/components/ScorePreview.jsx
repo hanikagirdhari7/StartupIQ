@@ -29,23 +29,46 @@ export function ScoreMeter({ value }) {
   )
 }
 
-function SubScore({ label, value, max = 100 }) {
-  const pct = (value / max) * 100
+// Same band colours as the real ScoreBreakdownCard, so the sample cannot show a
+// confident bar for a score the product would paint amber or rose.
+function barClasses(score) {
+  if (score === null) return 'bg-slate-200'
+  if (score >= 70) return 'bg-indigo-600'
+  if (score >= 45) return 'bg-amber-500'
+  return 'bg-rose-500'
+}
+
+function SubScore({ label, value }) {
   return (
     <div>
       <div className="flex justify-between text-sm mb-1">
         <span className="text-slate-600">{label}</span>
-        <span className="font-semibold text-slate-800">{value}/{max}</span>
+        {value === null ? (
+          <span className="text-xs font-semibold text-slate-400">Not enough data</span>
+        ) : (
+          <span className="font-semibold text-slate-800">{value}/100</span>
+        )}
       </div>
       <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
-          style={{ width: `${pct}%` }}
+          className={`h-full rounded-full ${barClasses(value)}`}
+          style={{ width: `${value === null ? 0 : value}%` }}
         />
       </div>
     </div>
   )
 }
+
+// Only values the real derivation rules can emit (see utils/subScores.js):
+// demand high=85, competition moderate=60, a 41% margin=70, setup at 42% of
+// budget=70. Growth gets no returning figure, so it stays unscored.
+const SAMPLE_SCORES = [
+  { label: 'Market Demand', value: 85 },
+  { label: 'Competition', value: 60 },
+  { label: 'Profit Potential', value: 70 },
+  { label: 'Ease of Entry', value: 70 },
+  { label: 'Long-term Growth', value: null },
+]
 
 export default function ScorePreview() {
   return (
@@ -56,14 +79,14 @@ export default function ScorePreview() {
             Your Business Viability Score
           </h2>
           <p className="text-slate-600 max-w-xl mx-auto">
-            Get a clear, data-backed score on your idea&apos;s chances of success — covering market demand,
-            competition, profitability, and more.
+            See how an idea is scored — market demand, competition, profitability, ease of entry, and growth
+            potential — based on what you tell us about it.
           </p>
         </div>
 
         {/* Sample label banner */}
         <div className="flex justify-center mb-6">
-          <span className="bg-amber-50 border border-amber-300 text-amber-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest">
+          <span className="bg-amber-50 border border-amber-300 text-amber-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest text-center">
             Sample / Illustrative Result — Not Real Analysis
           </span>
         </div>
@@ -74,9 +97,10 @@ export default function ScorePreview() {
             <div className="flex flex-col items-center gap-3 lg:w-56 shrink-0">
               <ScoreMeter value={74} />
               <div className="text-center">
-                <p className="text-lg font-bold text-slate-800">Good Potential</p>
+                <p className="text-lg font-bold text-slate-800">Strong Potential</p>
                 <p className="text-sm text-slate-500 mt-1">
-                  Your idea shows strong market fit with a few areas to address before launching.
+                  Your idea holds up on the details you provided. Focus on the risks and the first roadmap
+                  phase before you spend.
                 </p>
               </div>
             </div>
@@ -86,26 +110,34 @@ export default function ScorePreview() {
 
             {/* Right: sub-scores */}
             <div className="flex-1 w-full space-y-5">
-              <SubScore label="Market Demand" value={82} />
-              <SubScore label="Competition Level" value={61} />
-              <SubScore label="Profit Potential" value={78} />
-              <SubScore label="Ease of Entry" value={55} />
-              <SubScore label="Long-term Growth" value={80} />
+              {SAMPLE_SCORES.map(row => (
+                <SubScore key={row.label} label={row.label} value={row.value} />
+              ))}
+              <p className="text-xs text-slate-400 leading-relaxed pt-1">
+                An empty bar means the analysis returned no figure to score — nothing is guessed. In a real
+                report, each bar states the numbers it was worked out from.
+              </p>
             </div>
           </div>
 
-          {/* Tags */}
-          <div className="mt-8 pt-6 border-t border-slate-100 flex flex-wrap gap-2">
-            {['E-commerce', 'Low Startup Cost', 'B2C', 'High Demand Niche', 'Scalable'].map(tag => (
-              <span key={tag} className="bg-indigo-50 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full">
-                {tag}
-              </span>
-            ))}
+          {/* Founder's own submission details, as the real report header shows them */}
+          <div className="mt-8 pt-6 border-t border-slate-100">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3">
+              From the submission
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {['Ecommerce', 'Lahore, Pakistan', 'Budget PKR 120,000', 'Gift buyers aged 25–40'].map(tag => (
+                <span key={tag} className="bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold px-3 py-1 rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
         <p className="text-center text-xs text-slate-400 mt-4">
-          * This is a sample to illustrate how your results will look. Real analysis uses your actual idea and market data.
+          * This is a sample to illustrate how your results will look. A real report is scored from your own idea
+          and the details you provide — it is AI guidance, not live market data.
         </p>
       </div>
     </section>

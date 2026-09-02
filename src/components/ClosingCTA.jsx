@@ -11,7 +11,7 @@ export default function ClosingCTA() {
         </h2>
         <p className="text-indigo-100 text-lg mb-10 leading-relaxed">
           Your next business could be your best one — but only if you validate it first.
-          Enter your idea and get a full AI-powered analysis in under 2 minutes.
+          Enter your idea and get a full AI-powered analysis — it usually takes a minute or two.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
