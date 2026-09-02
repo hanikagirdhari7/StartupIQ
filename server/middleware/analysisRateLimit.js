@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto'
+
 // Sliding-window rate limit for POST /api/analyze.
 //
 // Why this exists: every accepted request spends a call on the shared AI key,
@@ -61,8 +63,21 @@ function humanWait(seconds) {
   return `${minutes} minute${minutes === 1 ? '' : 's'}`
 }
 
-function reject(res, wait) {
+// The log only has to tell two clients apart, so the address is hashed rather
+// than printed: a raw IP in the console is personal data the app never claims
+// to hold, and it would be the only place one appears.
+function clientTag(ip) {
+  return createHash('sha256').update(String(ip)).digest('hex').slice(0, 8)
+}
+
+function reject(res, wait, ip, window) {
   const seconds = Math.max(1, Math.ceil(wait / 1000))
+  // Without this line a rejection is invisible: the request stops here and never
+  // reaches the route logger, so "rate limited" and "server down" look identical.
+  console.warn(
+    `${new Date().toISOString()} [rate-limit] client=${clientTag(ip)} ` +
+      `window=${window} rejected retryAfter=${seconds}s`
+  )
   res.set('Retry-After', String(seconds))
   return res.status(429).json({
     success: false,
@@ -84,8 +99,12 @@ export function analysisRateLimit(req, res, next) {
   prune(entry.burst, now, BURST_WINDOW_MS)
   prune(entry.quota, now, QUOTA_WINDOW_MS)
 
-  if (entry.burst.length >= BURST_MAX) return reject(res, waitMs(entry.burst, now, BURST_WINDOW_MS))
-  if (entry.quota.length >= QUOTA_MAX) return reject(res, waitMs(entry.quota, now, QUOTA_WINDOW_MS))
+  if (entry.burst.length >= BURST_MAX) {
+    return reject(res, waitMs(entry.burst, now, BURST_WINDOW_MS), key, 'burst')
+  }
+  if (entry.quota.length >= QUOTA_MAX) {
+    return reject(res, waitMs(entry.quota, now, QUOTA_WINDOW_MS), key, 'quota')
+  }
 
   entry.burst.push(now)
   entry.quota.push(now)
