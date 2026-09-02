@@ -11,7 +11,8 @@ export default function ClosingCTA() {
         </h2>
         <p className="text-indigo-100 text-lg mb-9 leading-relaxed text-pretty">
           Your next business could be your best one — but only if you validate it first.
-          Enter your idea and get a full AI-powered analysis — it usually takes a minute or two.
+          Enter your idea and get a complete report — score, unit economics, risks and a launch
+          plan. It usually takes a minute or two.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
@@ -20,7 +21,7 @@ export default function ClosingCTA() {
             onClick={() => navigate('/validate')}
             className="w-full sm:w-auto bg-white hover:bg-slate-50 text-indigo-700 font-bold text-lg px-10 py-4 rounded-xl transition-all shadow-xl hover:-translate-y-0.5 cursor-pointer"
           >
-            Validate My Idea — It&apos;s Free
+            Validate Your Idea
           </button>
         </div>
 
@@ -31,7 +32,7 @@ export default function ClosingCTA() {
         </p>
 
         <ul className="mt-10 flex flex-wrap justify-center gap-2 sm:gap-3 text-sm text-indigo-100">
-          {['AI-Powered Analysis', 'Viability Score', 'Market Insights', 'Step-by-Step Launch Plan'].map(item => (
+          {['Viability Score', 'Market Insights', 'Unit Economics', 'Step-by-Step Launch Plan'].map(item => (
             <li key={item} className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3.5 py-1.5">
               <span aria-hidden="true">&#10003;</span>
               {item}

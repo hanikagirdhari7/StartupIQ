@@ -38,24 +38,28 @@ function barClasses(score) {
   return 'bg-rose-500'
 }
 
-function SubScore({ label, value }) {
+function SubScore({ label, value, basis }) {
   return (
-    <div>
-      <div className="flex justify-between text-sm mb-1">
-        <span className="text-slate-600">{label}</span>
+    <li className="py-3.5 first:pt-0 last:pb-0">
+      <div className="flex items-baseline justify-between gap-4 mb-2">
+        <span className="text-sm font-medium text-slate-600">{label}</span>
         {value === null ? (
           <span className="text-xs font-semibold text-slate-400">Not enough data</span>
         ) : (
-          <span className="font-semibold text-slate-800 tabular-nums">{value}/100</span>
+          <span className="text-sm font-bold text-slate-900 tabular-nums">
+            {value}
+            <span className="text-slate-400 font-medium">/100</span>
+          </span>
         )}
       </div>
-      <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+      <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
         <div
           className={`h-full rounded-full ${barClasses(value)}`}
           style={{ width: `${value === null ? 0 : value}%` }}
         />
       </div>
-    </div>
+      <p className="text-xs text-slate-400 leading-relaxed mt-1.5 text-pretty">{basis}</p>
+    </li>
   )
 }
 
@@ -63,11 +67,35 @@ function SubScore({ label, value }) {
 // demand high=85, competition moderate=60, a 41% margin=70, setup at 42% of
 // budget=70. Growth gets no returning figure, so it stays unscored.
 const SAMPLE_SCORES = [
-  { label: 'Market Demand', value: 85 },
-  { label: 'Competition', value: 60 },
-  { label: 'Profit Potential', value: 70 },
-  { label: 'Ease of Entry', value: 70 },
-  { label: 'Long-term Growth', value: null },
+  { label: 'Market Demand', value: 85, basis: 'Market demand level: high.' },
+  {
+    label: 'Competition',
+    value: 60,
+    basis: 'Higher means more room to enter. Competition level: moderate.',
+  },
+  {
+    label: 'Profit Potential',
+    value: 70,
+    basis: 'About 41% of each sale is left after its full cost — before marketing, rent and your own time.',
+  },
+  {
+    label: 'Ease of Entry',
+    value: 70,
+    basis: 'Setup costs are about 42% of the starting budget.',
+  },
+  {
+    label: 'Long-term Growth',
+    value: null,
+    basis: 'The report returns no growth or repeat-purchase figures, so a score here would be invented.',
+  },
+]
+
+// The same fields, in the same order, the real report header shows (ReportHeader.jsx).
+const SAMPLE_SUBMISSION = [
+  { label: 'Business type', value: 'Ecommerce' },
+  { label: 'Location', value: 'Lahore, Pakistan' },
+  { label: 'Budget', value: 'PKR 120,000' },
+  { label: 'Target customer', value: 'Gift buyers aged 25–40' },
 ]
 
 export default function ScorePreview() {
@@ -75,70 +103,73 @@ export default function ScorePreview() {
     <section className="py-20 bg-gradient-to-b from-white to-slate-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4 text-balance">
             Your Business Viability Score
           </h2>
-          <p className="text-slate-600 max-w-xl mx-auto">
+          <p className="text-slate-600 max-w-xl mx-auto text-pretty">
             See how an idea is scored — market demand, competition, profitability, ease of entry, and growth
             potential — based on what you tell us about it.
           </p>
         </div>
 
-        {/* Sample label banner */}
-        <div className="flex justify-center mb-6">
-          <span className="bg-amber-50 border border-amber-300 text-amber-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest text-center">
-            Sample / Illustrative Result — Not Real Analysis
-          </span>
-        </div>
-
         <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 sm:p-10">
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-10">
-            {/* Left: big score */}
-            <div className="flex flex-col items-center gap-3 md:w-56 shrink-0">
-              <ScoreMeter value={74} />
-              <div className="text-center">
-                <p className="text-lg font-bold text-slate-800">Strong Potential</p>
-                <p className="text-sm text-slate-500 mt-1 text-pretty">
-                  Your idea holds up on the details you provided. Focus on the risks and the first roadmap
-                  phase before you spend.
-                </p>
+          <div className="flex flex-col md:flex-row gap-8 md:gap-10">
+            {/* Focal point: the overall score */}
+            <div className="w-full md:w-72 shrink-0 rounded-2xl bg-slate-50 ring-1 ring-slate-100 p-5 sm:p-6 md:justify-center flex flex-col items-center text-center">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-5">
+                Overall viability
+              </p>
+              <div className="bg-white rounded-full p-2.5 sm:p-3 shadow-sm ring-1 ring-slate-100 flex items-center justify-center">
+                <ScoreMeter value={74} />
               </div>
+              <span className="mt-6 inline-block bg-indigo-50 border border-indigo-200 text-indigo-700 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
+                Strong Potential
+              </span>
+              <p className="mt-3 text-sm text-slate-500 leading-relaxed text-pretty">
+                Your idea holds up on the details you provided. Focus on the risks and the first roadmap
+                phase before you spend.
+              </p>
             </div>
 
-            {/* Divider */}
-            <div className="hidden md:block w-px self-stretch bg-slate-100" />
-
-            {/* Right: sub-scores */}
-            <div className="flex-1 w-full space-y-5">
-              {SAMPLE_SCORES.map(row => (
-                <SubScore key={row.label} label={row.label} value={row.value} />
-              ))}
-              <p className="text-xs text-slate-400 leading-relaxed pt-1">
-                An empty bar means the analysis returned no figure to score — nothing is guessed. In a real
-                report, each bar states the numbers it was worked out from.
+            {/* The factors behind it */}
+            <div className="flex-1 min-w-0">
+              <h3 className="text-base font-bold text-slate-900 mb-1">Business Score Breakdown</h3>
+              <p className="text-sm text-slate-500 mb-5 text-pretty">
+                Five readings from the same report, worked out with fixed rules — not extra opinions.
+              </p>
+              <ul className="divide-y divide-slate-100">
+                {SAMPLE_SCORES.map(row => (
+                  <SubScore key={row.label} label={row.label} value={row.value} basis={row.basis} />
+                ))}
+              </ul>
+              <p className="mt-5 text-xs text-slate-400 leading-relaxed text-pretty">
+                An empty bar means the report returned no figure to score, so nothing was guessed. In a real
+                report, every bar shows the numbers behind it.
               </p>
             </div>
           </div>
 
           {/* Founder's own submission details, as the real report header shows them */}
           <div className="mt-8 pt-6 border-t border-slate-100">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3">
-              From the submission
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {['Ecommerce', 'Lahore, Pakistan', 'Budget PKR 120,000', 'Gift buyers aged 25–40'].map(tag => (
-                <span key={tag} className="bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold px-3 py-1 rounded-full">
-                  {tag}
-                </span>
-              ))}
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                Your submission
+              </p>
             </div>
+            <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-3">
+              {SAMPLE_SUBMISSION.map(item => (
+                <div key={item.label} className="min-w-0">
+                  <dt className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                    {item.label}
+                  </dt>
+                  <dd className="mt-0.5 text-sm font-semibold text-slate-700 break-words">
+                    {item.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
-
-        <p className="text-center text-xs text-slate-400 mt-4">
-          * This is a sample to illustrate how your results will look. A real report is scored from your own idea
-          and the details you provide — it is AI guidance, not live market data.
-        </p>
       </div>
     </section>
   )

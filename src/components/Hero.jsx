@@ -21,9 +21,9 @@ export default function Hero() {
         </h1>
 
         <p className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed text-pretty">
-          StartupIQ analyzes your business idea using AI-driven insights to show you
-          what works, what doesn&apos;t, and how to plan your first steps — so you stop guessing
-          and start building with confidence.
+          StartupIQ turns your idea into a clear verdict — demand, competition, pricing, unit economics and
+          the risks — and lays out the launch plan to act on it, so you stop guessing and start building
+          with confidence.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
@@ -31,20 +31,20 @@ export default function Hero() {
             to="/validate"
             className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-base sm:text-lg px-8 py-3.5 sm:py-4 rounded-xl transition-all shadow-lg hover:shadow-indigo-200 hover:-translate-y-0.5"
           >
-            Validate My Idea <span aria-hidden="true">→</span>
+            Validate Your Idea <span aria-hidden="true">→</span>
           </Link>
           <a
-            href="#how-it-works"
+            href="#dashboard-preview"
             className="w-full sm:w-auto text-slate-700 hover:text-indigo-600 font-semibold text-base sm:text-lg px-8 py-3.5 sm:py-4 rounded-xl border border-slate-200 hover:border-indigo-200 transition-colors bg-white"
           >
-            See How It Works
+            Explore Sample Report
           </a>
         </div>
 
         <p className="mt-5 sm:mt-6 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-sm text-slate-400">
-          <span>No credit card required</span>
+          <span>Clear feasibility &amp; financial breakdown</span>
           <span aria-hidden="true">·</span>
-          <span>Analysis usually takes a minute or two</span>
+          <span>Free to use</span>
         </p>
       </div>
     </section>
