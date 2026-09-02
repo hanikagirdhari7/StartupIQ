@@ -12,7 +12,10 @@ const FIELDS = [
   { key: 'fixed', label: 'Setup costs before first sale', aiKey: 'fixedCosts' },
 ]
 
+// null, undefined and '' all coerce to 0 through Number(), which would turn an
+// estimate the analysis refused to make into a stated zero. Refuse them first.
 function seed(value) {
+  if (value === null || value === undefined || value === '') return ''
   const number = Number(value)
   return Number.isFinite(number) && number >= 0 ? String(number) : ''
 }

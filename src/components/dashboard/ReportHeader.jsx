@@ -1,4 +1,3 @@
-import SourceTag from './SourceTag'
 import { formatDateTime, formatPKR } from '../../utils/format'
 
 export default function ReportHeader({ idea, meta }) {
@@ -31,7 +30,6 @@ export default function ReportHeader({ idea, meta }) {
       <div className="pt-5 border-t border-slate-100">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
           <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Your submission</p>
-          <SourceTag source="user" />
         </div>
         <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-4">
           {facts.map(fact => (

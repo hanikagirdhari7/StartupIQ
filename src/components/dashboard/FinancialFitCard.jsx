@@ -71,7 +71,9 @@ export default function FinancialFitCard({ financialFit, budget }) {
       ? 'Break-even needs your fixed setup costs. Rather than guess an amount, the line above says "Not enough information to estimate reliably".'
       : profit === null
         ? 'We need the missing price or cost estimate above before break-even can be worked out.'
-        : `Your ${profitNoun} is not above zero, so there is nothing yet to recover setup costs from.`
+        : profit <= 0
+          ? `Your ${profitNoun} is not above zero, so there is nothing yet to recover setup costs from.`
+          : 'Your fixed setup costs are 0, so there is nothing to recover: every sale is ahead from the first one.'
     : null
 
   return (
