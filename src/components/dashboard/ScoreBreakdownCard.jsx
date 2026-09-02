@@ -1,3 +1,4 @@
+import SourceTag from './SourceTag'
 import { deriveSubScores } from '../../utils/subScores'
 
 // Same bands as the overall score ring, so the bars read as part of one system.
@@ -13,13 +14,11 @@ export default function ScoreBreakdownCard({ analysis, idea }) {
 
   return (
     <section className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8">
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
         <h3 className="text-lg font-extrabold text-slate-900">
           <span aria-hidden="true">📊</span> Business Score Breakdown
         </h3>
-        <span className="border border-slate-200 bg-slate-50 text-slate-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
-          Calculated on this page
-        </span>
+        <SourceTag source="calculated" />
       </div>
       <p className="text-sm text-slate-500 mb-5">
         Each bar is worked out from the findings above using fixed rules. These are derived readings of
@@ -34,7 +33,7 @@ export default function ScoreBreakdownCard({ analysis, idea }) {
               {row.score === null ? (
                 <span className="text-xs font-semibold text-slate-400">Not enough data</span>
               ) : (
-                <span className="text-sm font-extrabold text-slate-900">{row.score}/100</span>
+                <span className="text-sm font-extrabold text-slate-900 tabular-nums">{row.score}/100</span>
               )}
             </div>
             <div

@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 
 function MetricCard({ label, value, trend, trendUp }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-100 p-4 shadow-sm">
-      <p className="text-xs text-slate-500 font-medium mb-1">{label}</p>
-      <p className="text-2xl font-extrabold text-slate-900">{value}</p>
-      <p className={`text-xs font-semibold mt-1 ${trendUp ? 'text-emerald-600' : 'text-amber-600'}`}>{trend}</p>
+    <div className="bg-white rounded-xl border border-slate-100 p-4 shadow-sm min-w-0">
+      <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">{label}</p>
+      <p className="text-2xl font-extrabold text-slate-900 tabular-nums">{value}</p>
+      <p className={`text-xs font-semibold mt-1 tabular-nums ${trendUp ? 'text-emerald-600' : 'text-amber-600'}`}>{trend}</p>
     </div>
   )
 }
@@ -18,7 +18,7 @@ function InsightRow({ icon, text, type }) {
   }
   return (
     <div className={`flex items-start gap-3 p-3 rounded-lg border text-sm ${styles[type]}`}>
-      <span className="text-lg leading-none mt-0.5">{icon}</span>
+      <span className="text-lg leading-none mt-0.5" aria-hidden="true">{icon}</span>
       <span className="leading-snug">{text}</span>
     </div>
   )
@@ -73,15 +73,15 @@ export default function DashboardPreview() {
             </div>
 
             {/* Metric cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <MetricCard label="Market Demand" value="High" trend="85/100 in the breakdown" trendUp />
               <MetricCard label="Competition" value="Moderate" trend="60/100 room to enter" trendUp={false} />
-              <MetricCard label="Profit per Sale" value="PKR 1,850" trend="≈41% of each sale" trendUp />
+              <MetricCard label="Margin per Sale" value="PKR 1,850" trend="≈41% after its full cost" trendUp />
               <MetricCard label="Break-even" value="28 sales" trend="Covers PKR 50,000 setup" trendUp={false} />
             </div>
 
             {/* Insights */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
               <InsightRow icon="✅" text="High demand in gifting & lifestyle niches on Daraz & social media" type="strength" />
               <InsightRow icon="⚠️" text="Pricing pressure from Chinese imports — differentiate on quality/story" type="risk" />
               <InsightRow icon="💡" text="Start with Instagram + WhatsApp before investing in a full website" type="tip" />
@@ -102,9 +102,9 @@ export default function DashboardPreview() {
               </div>
               <div className="absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-sm">
                 <div className="text-center">
-                  <p className="text-slate-700 font-bold text-lg mb-2">🔒 Full Launch Plan Included</p>
+                  <p className="text-slate-700 font-bold text-lg mb-2">This is what your launch plan looks like</p>
                   <Link to="/validate" className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
-                    Validate My Idea to Unlock
+                    Validate My Idea to See Yours
                   </Link>
                 </div>
               </div>

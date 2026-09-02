@@ -96,7 +96,7 @@ export function deriveSubScores(analysis, idea) {
         ? `Needs both a selling price and a cost estimate above. ${
             fit.priceLabel || 'Price'
           } or ${fit.costLabel || 'cost'} was not estimated.`
-        : `Derived from the estimate above: ${Math.round(margin * 100)}% of each sale is left after cost.`,
+        : `Derived from the estimate above: ${Math.round(margin * 100)}% of each sale is left after that sale's full cost — before marketing, rent and the founder's own time.`,
     },
     {
       key: 'easeOfEntry',

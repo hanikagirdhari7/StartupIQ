@@ -28,9 +28,9 @@ export function LevelBadge({ level, tone = 'neutral' }) {
 export function InsightRow({ label, children }) {
   if (!children) return null
   return (
-    <div>
+    <div className="min-w-0">
       <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">{label}</p>
-      <p className="text-slate-600 leading-relaxed">{children}</p>
+      <p className="text-slate-600 leading-relaxed break-words text-pretty">{children}</p>
     </div>
   )
 }
@@ -39,7 +39,7 @@ export default function InsightCard({ title, badge, children }) {
   return (
     <section className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8 h-full">
       <div className="flex items-start justify-between gap-4 mb-5">
-        <h3 className="text-lg font-extrabold text-slate-900 leading-tight">{title}</h3>
+        <h3 className="text-lg font-extrabold text-slate-900 leading-tight text-balance">{title}</h3>
         {badge}
       </div>
       <div className="space-y-4">{children}</div>

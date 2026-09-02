@@ -36,7 +36,7 @@ export default function ListCard({ title, items, variant = 'actions', ordered = 
               ) : (
                 <span className={`shrink-0 mt-2 w-1.5 h-1.5 rounded-full ${styles.dot}`} />
               )}
-              <span className="text-slate-600 leading-relaxed">{item}</span>
+              <span className="text-slate-600 leading-relaxed break-words text-pretty">{item}</span>
             </li>
           ))}
         </ul>

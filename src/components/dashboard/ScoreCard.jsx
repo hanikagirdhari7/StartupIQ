@@ -1,3 +1,4 @@
+import SourceTag from './SourceTag'
 import { ScoreMeter } from '../ScorePreview'
 
 function bandFor(score) {
@@ -29,7 +30,14 @@ export default function ScoreCard({ score }) {
   const band = hasScore ? bandFor(clamped) : null
 
   return (
-    <section className="mt-6 bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8">
+    <section className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <h3 className="text-lg font-extrabold text-slate-900">
+          <span aria-hidden="true">🎯</span> Business Viability Score
+        </h3>
+        <SourceTag source="ai" />
+      </div>
+
       <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10">
         <div className="shrink-0">
           {hasScore ? (
@@ -39,7 +47,6 @@ export default function ScoreCard({ score }) {
               N/A
             </div>
           )}
-          <p className="text-center text-xs text-slate-400 mt-2">Business Viability Score</p>
         </div>
 
         <div className="flex-1 text-center sm:text-left">

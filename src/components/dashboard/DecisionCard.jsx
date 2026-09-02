@@ -1,3 +1,4 @@
+import SourceTag from './SourceTag'
 import { deriveDecision } from '../../utils/decision'
 
 const STYLES = {
@@ -49,9 +50,12 @@ export default function DecisionCard({ analysis, idea }) {
       aria-labelledby="decision-heading"
       className={`rounded-2xl shadow-xl border-2 p-6 sm:p-8 ${styles.card}`}
     >
-      <p className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-3">
-        Final business decision
-      </p>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+        <p className="text-[11px] font-bold uppercase tracking-widest text-slate-500">
+          Final business decision
+        </p>
+        <SourceTag source="calculated" />
+      </div>
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         <span

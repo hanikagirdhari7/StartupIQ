@@ -8,7 +8,7 @@ import { formatPKR } from '../../utils/format'
 const FIELDS = [
   { key: 'budget', label: 'Available budget', aiKey: null },
   { key: 'price', label: 'Selling price per sale', aiKey: 'priceEstimate' },
-  { key: 'cost', label: 'Cost per sale', aiKey: 'costEstimate' },
+  { key: 'cost', label: 'Full cost per sale', aiKey: 'costEstimate' },
   { key: 'fixed', label: 'Setup costs before first sale', aiKey: 'fixedCosts' },
 ]
 
@@ -51,7 +51,7 @@ function Field({ label, hint, value, onChange }) {
           className="w-full border border-slate-200 rounded-xl bg-white pl-11 pr-3 py-2.5 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
         />
       </span>
-      <span className="block text-[11px] text-slate-400 mt-1">{hint}</span>
+      <span className="block text-[11px] text-slate-400 mt-1 tabular-nums">{hint}</span>
     </label>
   )
 }
@@ -60,7 +60,7 @@ function Result({ label, value, note }) {
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-4">
       <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">{label}</p>
-      <p className={value.muted ? 'text-sm font-semibold text-slate-400 leading-relaxed' : 'text-lg font-extrabold text-slate-900'}>
+      <p className={value.muted ? 'text-sm font-semibold text-slate-400 leading-relaxed' : 'text-lg font-extrabold text-slate-900 tabular-nums'}>
         {value.text}
       </p>
       {note && <p className="text-xs text-slate-500 leading-relaxed mt-1.5">{note}</p>}
@@ -107,16 +107,16 @@ export default function ScenarioCalculator({ financialFit, budget }) {
 
   const results = [
     {
-      label: 'Estimated profit per sale',
+      label: 'Estimated margin per sale',
       value: profit === null ? missing('Enter a selling price and a cost per sale.') : { text: formatPKR(profit) },
       note: profit === null ? null : `${formatPKR(price)} minus ${formatPKR(cost)}.`,
     },
     {
-      label: 'Profit margin',
+      label: 'Margin on each sale',
       value: margin === null
         ? missing(profit === null ? 'Enter a selling price and a cost per sale.' : 'Needs a selling price above 0.')
         : { text: `${Math.round(margin)}%` },
-      note: margin === null ? null : 'Share of each sale left after its cost.',
+      note: margin === null ? null : 'Share of each sale left after its full cost. Marketing, rent and your own time still come out of it.',
     },
     {
       label: 'Sales to recover setup costs',

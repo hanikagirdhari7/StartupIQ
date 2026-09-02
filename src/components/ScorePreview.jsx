@@ -46,7 +46,7 @@ function SubScore({ label, value }) {
         {value === null ? (
           <span className="text-xs font-semibold text-slate-400">Not enough data</span>
         ) : (
-          <span className="font-semibold text-slate-800">{value}/100</span>
+          <span className="font-semibold text-slate-800 tabular-nums">{value}/100</span>
         )}
       </div>
       <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -92,13 +92,13 @@ export default function ScorePreview() {
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 sm:p-10">
-          <div className="flex flex-col lg:flex-row items-center gap-10">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-10">
             {/* Left: big score */}
-            <div className="flex flex-col items-center gap-3 lg:w-56 shrink-0">
+            <div className="flex flex-col items-center gap-3 md:w-56 shrink-0">
               <ScoreMeter value={74} />
               <div className="text-center">
                 <p className="text-lg font-bold text-slate-800">Strong Potential</p>
-                <p className="text-sm text-slate-500 mt-1">
+                <p className="text-sm text-slate-500 mt-1 text-pretty">
                   Your idea holds up on the details you provided. Focus on the risks and the first roadmap
                   phase before you spend.
                 </p>
@@ -106,7 +106,7 @@ export default function ScorePreview() {
             </div>
 
             {/* Divider */}
-            <div className="hidden lg:block w-px h-48 bg-slate-100" />
+            <div className="hidden md:block w-px self-stretch bg-slate-100" />
 
             {/* Right: sub-scores */}
             <div className="flex-1 w-full space-y-5">

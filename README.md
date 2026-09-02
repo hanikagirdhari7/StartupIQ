@@ -128,6 +128,13 @@ before scaling out.
 5. Reports are saved in the browser only (`localStorage`, key
    `startupiq.reports.v1`), listed on the results page, and can be deleted there.
 
+`financialFit.costEstimate` is the **fully loaded** cost of one delivered sale — item or material,
+packaging, box, inserts, courier, and the expected loss from failed or returned cash-on-delivery orders
+where those apply — not the purchase price of the stock. The per-sale figure derived from it is therefore
+a contribution before marketing, rent and the founder's own time, and StartupIQ deliberately never
+calculates a net profit: ad spend, conversion and overheads are not collected, so any net number would be
+invented rather than estimated.
+
 ### Adding or switching a provider
 
 `server/ai/index.js` holds a registry of providers, each implementing

@@ -35,7 +35,7 @@ export default function RecentReportsCard({ currentId }) {
           return (
             <li key={entry.id} className="py-4 first:pt-0 last:pb-0">
               <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
-                <div className="min-w-0 flex-1">
+                <div className="w-full min-w-0 sm:w-auto sm:flex-1">
                   <p className="text-sm font-semibold text-slate-800 leading-snug break-words">
                     {entry.summary.title}
                     {isCurrent && (
@@ -44,7 +44,7 @@ export default function RecentReportsCard({ currentId }) {
                       </span>
                     )}
                   </p>
-                  <p className="mt-1 text-xs text-slate-500">{meta.join(' · ')}</p>
+                  <p className="mt-1 text-xs text-slate-500 break-words">{meta.join(' · ')}</p>
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">

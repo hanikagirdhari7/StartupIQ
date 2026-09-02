@@ -24,7 +24,7 @@ export default function RoadmapCard({ steps }) {
                   <span className="shrink-0 w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-[11px] font-bold flex items-center justify-center">
                     {index + 1}
                   </span>
-                  <p className="font-bold text-slate-900 text-sm sm:text-base">
+                  <p className="font-bold text-slate-900 text-sm sm:text-base break-words">
                     {step.period || `Phase ${index + 1}`}
                   </p>
                 </div>
@@ -35,7 +35,7 @@ export default function RoadmapCard({ steps }) {
                     actions.map((action, inner) => (
                       <li key={`action-${inner}`} className="flex gap-2">
                         <span className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-slate-300" />
-                        <span className="text-slate-600 leading-relaxed">{action}</span>
+                        <span className="text-slate-600 leading-relaxed break-words text-pretty">{action}</span>
                       </li>
                     ))
                   )}

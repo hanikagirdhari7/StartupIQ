@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import ScenarioCalculator from './ScenarioCalculator'
+import SourceTag from './SourceTag'
 import { formatPKR as money } from '../../utils/format'
 
 const STATUS = {
@@ -28,7 +29,7 @@ function Row({ label, value, muted }) {
   return (
     <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3 border-b border-slate-100 last:border-0">
       <dt className="text-sm text-slate-500">{label}</dt>
-      <dd className={`text-base font-extrabold ${muted ? 'text-slate-400 font-semibold text-sm' : 'text-slate-900'}`}>
+      <dd className={`text-base font-extrabold tabular-nums break-words ${muted ? 'text-slate-400 font-semibold text-sm' : 'text-slate-900'}`}>
         {value}
       </dd>
     </div>
@@ -62,9 +63,9 @@ export default function FinancialFitCard({ financialFit, budget }) {
         }`
 
   const profitLabel = perSale
-    ? 'Estimated profit per sale'
-    : 'Estimated monthly contribution per customer'
-  const profitNoun = perSale ? 'profit per sale' : 'monthly contribution per customer'
+    ? 'Estimated margin per sale (before marketing and overheads)'
+    : 'Estimated monthly margin per customer (before overheads)'
+  const profitNoun = perSale ? 'margin per sale' : 'monthly margin per customer'
   const breakEvenGap = !breakEven
     ? fixed === null
       ? 'Break-even needs your fixed setup costs. Rather than guess an amount, the line above says "Not enough information to estimate reliably".'
@@ -79,11 +80,14 @@ export default function FinancialFitCard({ financialFit, budget }) {
         <h3 className="text-lg font-extrabold text-slate-900">
           <span aria-hidden="true">💰</span> Financial Fit
         </h3>
-        {status && (
-          <span className={`border rounded-full px-4 py-1.5 text-sm font-bold ${status.classes}`}>
-            <span aria-hidden="true">{status.dot}</span> {status.label}
-          </span>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          <SourceTag source="ai" />
+          {status && (
+            <span className={`border rounded-full px-4 py-1.5 text-sm font-bold ${status.classes}`}>
+              <span aria-hidden="true">{status.dot}</span> {status.label}
+            </span>
+          )}
+        </div>
       </div>
       <p className="text-sm text-slate-500 mb-4">
         Can you realistically test this business with the budget you have?
@@ -121,8 +125,10 @@ export default function FinancialFitCard({ financialFit, budget }) {
       <p className="mt-4 text-xs text-slate-500 leading-relaxed">
         <span className="font-semibold text-slate-700">AI-generated estimates: </span>
         Pricing and cost figures are estimates based on the information provided and should be
-        validated with suppliers and current market prices. These figures are guidance, not verified
-        live market data.
+        validated with suppliers and current market prices. Where they apply, a per-sale cost already
+        includes packaging, courier and the expected loss from failed or returned deliveries — it is not
+        only what the stock cost. What is left after it is therefore not profit either: marketing, rent and
+        your own time come out of that. These figures are guidance, not verified live market data.
       </p>
 
       {breakEvenGap && (

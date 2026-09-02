@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import SourceTag from './SourceTag'
 
 // Route vocabulary comes from the analysis (server/schemas/analysisResponse.js).
 // An unknown id still renders, just with a prettified id instead of a label.
@@ -160,7 +161,10 @@ function PlatformLink({ link, variant = 'solid' }) {
 function Card({ children }) {
   return (
     <section className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8">
-      <h3 className="text-lg font-extrabold text-slate-900 mb-4">Smart Sourcing</h3>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <h3 className="text-lg font-extrabold text-slate-900">Smart Sourcing</h3>
+        <SourceTag source="ai" />
+      </div>
       {children}
     </section>
   )
@@ -226,7 +230,7 @@ export default function SourcingCard({ sourcing, location: ideaLocation }) {
 
   return (
     <Card>
-      {data.summary && <p className="text-slate-600 leading-relaxed mb-6 -mt-2">{data.summary}</p>}
+      {data.summary && <p className="text-slate-600 leading-relaxed mb-6 text-pretty">{data.summary}</p>}
 
       {/* The single decision first; everything else supports it. */}
       <div className="rounded-2xl border-2 border-indigo-500 bg-indigo-50/60 p-5 sm:p-6">
@@ -235,10 +239,10 @@ export default function SourcingCard({ sourcing, location: ideaLocation }) {
         </p>
         <div className="flex flex-wrap items-center gap-3">
           <span aria-hidden="true">&#129351;</span>
-          <h4 className="text-xl font-extrabold text-slate-900 leading-tight">
+          <h4 className="text-xl font-extrabold text-slate-900 leading-tight break-words">
             {routeLabel(best.route)}
           </h4>
-          <span className="bg-white border border-indigo-200 text-indigo-700 rounded-full px-3 py-1 text-xs font-bold">
+          <span className="bg-white border border-indigo-200 text-indigo-700 rounded-full px-3 py-1 text-xs font-bold tabular-nums">
             {bestScore}/100 fit for you
           </span>
         </div>
@@ -246,7 +250,7 @@ export default function SourcingCard({ sourcing, location: ideaLocation }) {
           <div className="h-full bg-indigo-600 rounded-full" style={{ width: `${bestScore}%` }} />
         </div>
         {best.why && <p className="text-slate-700 leading-relaxed mb-5">{best.why}</p>}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <Point label="Main advantage" value={best.advantage} />
           <Point label="Main limitation" value={best.limitation} />
           <Point label="Switch when" value={best.switchWhen} />
@@ -274,8 +278,8 @@ export default function SourcingCard({ sourcing, location: ideaLocation }) {
               return (
                 <div key={route.route} className="rounded-xl border border-slate-200 p-4 sm:p-5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <h5 className="font-bold text-slate-900">{routeLabel(route.route)}</h5>
-                    <span className="text-xs font-semibold text-slate-500">
+                    <h5 className="font-bold text-slate-900 break-words">{routeLabel(route.route)}</h5>
+                    <span className="text-xs font-semibold text-slate-500 tabular-nums">
                       {clampScore(route.fitScore)}/100 fit
                     </span>
                   </div>

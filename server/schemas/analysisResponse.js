@@ -42,13 +42,15 @@ export const FINANCIAL_FIT_SCHEMA = {
   basis: null,              // string — 'perSale' (unit economics) or 'perMonth' (running costs)
   priceLabel: null,         // string — short plain-English label, e.g. 'Estimated selling price'
   priceEstimate: null,      // number | null — estimate in the submitted currency, null when unknown
-  costLabel: null,          // string — e.g. 'Estimated cost per sale' / 'Estimated monthly operating cost'
-  costEstimate: null,       // number | null
+  costLabel: null,          // string — e.g. 'Estimated full cost per sale' / 'Estimated monthly operating cost'
+  costEstimate: null,       // number | null — the FULL delivered cost: item + packaging + box + inserts +
+                            //   courier + expected failed-delivery/return loss. Not the stock purchase price.
   fixedCosts: null,         // number | null — spend needed before the first sale; null when unknown
   status: null,             // string — one of FINANCIAL_FIT_STATUSES
   verdict: null,            // string — the ONE short recommendation shown under "StartupIQ says"
   biggestConcern: null,     // string — the single biggest financial worry for this idea
-  howEstimated: null,       // string — plain-English account of how these numbers were reached
+  howEstimated: null,       // string — what sits inside costEstimate, what it excludes, and any assumption
+                            //   made without founder data; the only place line items can reach the founder
   missingInformation: null, // string | null — what the founder must add for a reliable estimate
 }
 
