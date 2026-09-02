@@ -17,8 +17,18 @@ const STATUS_LABELS = {
 
 const DECISIONS = {
   go: { label: 'GO', headline: 'Clear to start testing' },
-  modify: { label: 'MODIFY', headline: 'Worth pursuing — fix these gaps first' },
-  dontLaunch: { label: "DON'T LAUNCH YET", headline: 'Not ready as described' },
+  // "fix these gaps" and "not ready" both point at blockers. When the analysis
+  // named none, the score came from the overall picture, so say that instead.
+  modify: {
+    label: 'MODIFY',
+    headline: 'Worth pursuing — fix these gaps first',
+    openHeadline: 'Worth pursuing — strengthen the findings first',
+  },
+  dontLaunch: {
+    label: "DON'T LAUNCH YET",
+    headline: 'Not ready as described',
+    openHeadline: 'Scored low, with no single blocker to fix',
+  },
   unknown: { label: 'NO DECISION', headline: 'No decision available' },
 }
 
@@ -158,8 +168,12 @@ export function deriveDecision(analysis, idea) {
     .sort((a, b) => priority.indexOf(a.label) - priority.indexOf(b.label))
     .slice(0, 3)
 
+  // A GO is not a clean bill of health. The same rules apply at every band and
+  // only the framing changes, so a 72/100 carrying high competition or a setup
+  // estimate above budget still shows what to watch, instead of going quiet on
+  // the founder who is about to spend money.
   const blockers =
-    key === 'go' || key === 'unknown'
+    key === 'unknown'
       ? []
       : collectBlockers({
           fit,
@@ -173,6 +187,16 @@ export function deriveDecision(analysis, idea) {
           competition,
         })
 
+  const blockerHeading =
+    key === 'go'
+      ? 'Worth watching'
+      : blockers.length === 1
+        ? 'Main blocker'
+        : 'Main blockers'
+
+  const headline =
+    blockers.length === 0 && decision.openHeadline ? decision.openHeadline : decision.headline
+
   const explanation =
     key === 'unknown'
       ? 'The analysis did not return a viability score, so there is nothing to base a decision on. The findings below are still worth reading, and a fresh analysis with more detail would let StartupIQ decide.'
@@ -181,19 +205,24 @@ export function deriveDecision(analysis, idea) {
           factors.length > 0
             ? factors[0].text
             : 'The analysis returned no supporting detail to explain it with.',
-          blockers.length > 0
-            ? `${blockers.length} thing${blockers.length === 1 ? '' : 's'} still need${blockers.length === 1 ? 's' : ''} to be settled before money is spent.`
-            : 'Nothing in the analysis blocks a first test.',
+          blockers.length === 0
+            ? key === 'go'
+              ? 'Nothing in the analysis blocks a first test.'
+              : 'Nothing in the findings blocks a first test outright, so this score comes from the overall picture above.'
+            : key === 'go'
+              ? `It clears the bar to test, with ${blockers.length} thing${blockers.length === 1 ? '' : 's'} worth watching as you spend.`
+              : `${blockers.length} thing${blockers.length === 1 ? '' : 's'} still need${blockers.length === 1 ? 's' : ''} to be settled before money is spent.`,
         ])
 
   return {
     key,
     label: decision.label,
-    headline: decision.headline,
+    headline,
     score,
     explanation,
     factors,
     blockers,
+    blockerHeading,
     nextActions,
   }
 }

@@ -82,11 +82,16 @@ export default function DecisionCard({ analysis, idea }) {
       )}
 
       {decision.blockers.length > 0 && (
-        <Block title={decision.blockers.length === 1 ? 'Main blocker' : 'Main blockers'}>
+        <Block title={decision.blockerHeading}>
           <ul className="space-y-2">
             {decision.blockers.map(blocker => (
               <li key={blocker} className="flex gap-3">
-                <span aria-hidden="true" className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-rose-500" />
+                <span
+                  aria-hidden="true"
+                  className={`shrink-0 mt-2 w-1.5 h-1.5 rounded-full ${
+                    decision.key === 'go' ? 'bg-amber-500' : 'bg-rose-500'
+                  }`}
+                />
                 <span className="text-slate-700 leading-relaxed">{blocker}</span>
               </li>
             ))}

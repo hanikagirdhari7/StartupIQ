@@ -25,10 +25,10 @@ function finite(value) {
   return Number.isFinite(number) ? number : null
 }
 
-// Financial Fit shows "Not enough information to estimate reliably" for a fixedCosts
-// that is not a real number — and a model can send "" or "0" when it has no idea.
-// finite() would coerce those to 0 and score an unknown setup as a free one, so this
-// mirrors that stricter rule to keep the two cards telling the same story.
+// Financial Fit shows "Not enough information to estimate reliably" for any
+// estimate that is not a real number — and a model can send "" or "0" when it has
+// no idea. finite() would coerce those to 0 and score an unknown as a known zero,
+// so this mirrors that stricter rule to keep the two cards telling the same story.
 function aiFigure(value) {
   return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : null
 }
@@ -61,8 +61,8 @@ export function deriveSubScores(analysis, idea) {
   const competition = data.competition || {}
   const fit = data.financialFit || {}
   const budget = finite(idea && idea.budgetPKR)
-  const price = finite(fit.priceEstimate)
-  const cost = finite(fit.costEstimate)
+  const price = aiFigure(fit.priceEstimate)
+  const cost = aiFigure(fit.costEstimate)
   const fixed = aiFigure(fit.fixedCosts)
   const hasEstimates = price !== null && cost !== null && price > 0
 
