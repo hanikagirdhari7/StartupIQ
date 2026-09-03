@@ -14,6 +14,7 @@ const SAFE_ERRORS = {
   AI_MISCONFIGURED: { status: 503, code: 'AI_CONFIGURATION_ERROR', message: 'AI analysis is enabled but not configured correctly. Please check the server setup.' },
   AI_AUTH_FAILED: { status: 503, code: 'AI_CONFIGURATION_ERROR', message: 'AI analysis credentials were rejected. Please check the server configuration.' },
   AI_RATE_LIMITED: { status: 429, code: 'AI_RATE_LIMITED', message: 'The AI analysis service is busy. Please try again in a moment.' },
+  AI_OVERLOADED: { status: 503, code: 'AI_OVERLOADED', message: 'The AI analysis service is temporarily overloaded, so no report came back. This is not a problem with your idea. Please try again in a minute.' },
   AI_BAD_OUTPUT: { status: 502, code: 'AI_ANALYSIS_FAILED', message: 'The AI analysis was incomplete. Please try again.' },
   AI_UNREACHABLE: { status: 502, code: 'AI_UNREACHABLE', message: 'The AI analysis service could not be reached. Please try again shortly.' },
   AI_REQUEST_FAILED: { status: 502, code: 'AI_ANALYSIS_FAILED', message: 'We could not complete the AI analysis. Please try again shortly.' },

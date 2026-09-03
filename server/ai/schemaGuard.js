@@ -147,7 +147,16 @@ function assertValidFinancialFit(fit, pricing) {
       fit[key] = null
       continue
     }
-    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
+    const isNumber = typeof value === 'number' && Number.isFinite(value)
+    if (key === 'priceEstimate') {
+      // A price that came back as text, a negative or a zero is not an estimate,
+      // but every other part of the report is still the model's own analysis. Fall
+      // back to the null the model would have written had it declined to guess, so
+      // the card shows "Not estimated" instead of the founder losing the report.
+      fit[key] = isNumber && value > 0 ? value : null
+      continue
+    }
+    if (!isNumber || value < 0) {
       fail(`financialFit.${key} must be a positive number or null.`)
     }
   }

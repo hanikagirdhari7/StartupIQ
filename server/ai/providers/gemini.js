@@ -189,6 +189,12 @@ function classifyFailure(err) {
   if (numeric === 429 || /RESOURCE_EXHAUSTED|rate limit/i.test(detail)) {
     return safeError('Gemini rate limit reached.', 'AI_RATE_LIMITED')
   }
+  // Capacity, not the request: Google answers 503 / UNAVAILABLE when the model is
+  // busy, and the same submission can succeed a minute later. Nothing the founder
+  // typed caused it, so it must not read as a failed analysis.
+  if (numeric === 503 || /UNAVAILABLE|high demand|overload/i.test(detail)) {
+    return safeError('Gemini is temporarily overloaded.', 'AI_OVERLOADED')
+  }
   if (numeric === 400 || numeric === 404) {
     return safeError('Gemini rejected the analysis request.', 'AI_REQUEST_FAILED')
   }
