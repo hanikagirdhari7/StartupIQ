@@ -113,7 +113,7 @@ export default function DashboardPreview() {
             {/* Blurred launch plan teaser */}
             <div className="relative rounded-xl border border-slate-100 overflow-hidden">
               <div className="blur-sm pointer-events-none select-none p-5">
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Your Launch Roadmap</p>
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Your Launch Kit</p>
                 <div className="space-y-2">
                   {['Week 1: Validate with 10 potential customers via Instagram DMs', 'Week 2: Compare 3 wholesale clothing suppliers on price and sizing', 'Week 3: Create product photos & launch Daraz storefront', 'Week 4: Run first PKR 2,000 ad campaign targeting women aged 18–35'].map(item => (
                     <div key={item} className="flex items-center gap-2 text-sm text-slate-700">

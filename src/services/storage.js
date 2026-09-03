@@ -163,6 +163,20 @@ export function saveReport(report) {
   return id
 }
 
+// The Launch Kit ticks live inside the report they came from, so removing that
+// report removes them too and they can never outlive their steps. savedAt is left
+// untouched on purpose: ticking a box is not a re-save, and the recent-reports
+// list must not jump every time someone makes progress.
+export function saveLaunchKit(id, checked) {
+  const wanted = text(id)
+  if (!wanted) return false
+  const entries = readAll()
+  const match = entries.find(entry => entry.id === wanted)
+  if (!match) return false
+  match.report = { ...match.report, launchKit: { checked } }
+  return writeAll(entries)
+}
+
 export function deleteReport(id) {
   const wanted = text(id)
   if (!wanted) return false

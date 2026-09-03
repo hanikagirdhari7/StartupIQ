@@ -5,10 +5,10 @@ import Navbar from '../components/Navbar'
 import DecisionCard from '../components/dashboard/DecisionCard'
 import FinancialFitCard from '../components/dashboard/FinancialFitCard'
 import InsightCard, { InsightRow, LevelBadge } from '../components/dashboard/InsightCard'
+import LaunchKitCard from '../components/dashboard/LaunchKitCard'
 import ListCard from '../components/dashboard/ListCard'
 import RecentReportsCard from '../components/dashboard/RecentReportsCard'
 import ReportHeader from '../components/dashboard/ReportHeader'
-import RoadmapCard from '../components/dashboard/RoadmapCard'
 import ScoreBreakdownCard from '../components/dashboard/ScoreBreakdownCard'
 import ScoreCard from '../components/dashboard/ScoreCard'
 import SourcingCard from '../components/dashboard/SourcingCard'
@@ -90,22 +90,19 @@ export default function ResultsPage() {
             </InsightCard>
           </div>
 
-          <FinancialFitCard key={currentId} financialFit={analysis.financialFit} budget={idea.budgetPKR} />
+          <FinancialFitCard key={`financial-${currentId}`} financialFit={analysis.financialFit} budget={idea.budgetPKR} />
 
           <SourcingCard sourcing={sourcing} location={idea.location} />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <ListCard title="Marketing Recommendations" items={analysis.marketingRecommendations} variant="marketing" />
-            <ListCard title="Risks To Watch" items={analysis.risks} variant="risks" />
-          </div>
+          <ListCard title="Risks To Watch" items={analysis.risks} variant="risks" />
 
-          <RoadmapCard steps={analysis.launchRoadmap} />
-
-          <ListCard
-            title="Immediate Next Actions"
-            items={analysis.nextActions}
-            variant="actions"
-            ordered
+          <LaunchKitCard
+            key={`launch-kit-${currentId}`}
+            analysis={analysis}
+            idea={idea}
+            analyzedAt={report.analyzedAt}
+            reportId={currentId}
+            initialChecked={report.launchKit && report.launchKit.checked}
           />
 
           <DecisionCard analysis={analysis} idea={idea} />
@@ -115,7 +112,7 @@ export default function ResultsPage() {
           <div className="bg-indigo-600 rounded-2xl shadow-xl p-6 sm:p-8">
             <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-2">Ready for the next step?</h2>
             <p className="text-indigo-100 mb-6 max-w-xl">
-              Work through the roadmap phase by phase, or validate another idea while this report
+              Work through your Launch Kit step by step, or validate another idea while this report
               is still fresh.
             </p>
             <div className="flex flex-wrap gap-3">

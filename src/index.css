@@ -27,6 +27,38 @@ button:focus-visible {
   border-radius: 0.5rem;
 }
 
+/* "Print Launch Kit" should hand the founder a page of plan and nothing else.
+   Visibility rather than display, so the on-screen layout is untouched and the kit
+   simply lifts to the top of the sheet at full width. The :has() guard matters:
+   without it these rules would blank every other page on the site when printed. */
+@media print {
+  body:has(.launch-kit) * {
+    visibility: hidden;
+  }
+
+  body:has(.launch-kit) .launch-kit,
+  body:has(.launch-kit) .launch-kit * {
+    visibility: visible;
+  }
+
+  .launch-kit {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .print-hide {
+    display: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
