@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { ClipboardCopy, ListChecks, Printer } from 'lucide-react'
 import { saveLaunchKit } from '../../services/storage'
 import { buildLaunchKit, buildLaunchKitText, countDone } from '../../utils/launchKit'
 
@@ -35,7 +36,7 @@ async function writeClipboard(content) {
 }
 
 const BUTTON =
-  'print-hide shrink-0 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors'
+  'print-hide inline-flex shrink-0 items-center gap-1.5 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors'
 
 export default function LaunchKitCard({ analysis, idea, analyzedAt, reportId, initialChecked }) {
   const kit = useMemo(() => buildLaunchKit(analysis), [analysis])
@@ -68,11 +69,12 @@ export default function LaunchKitCard({ analysis, idea, analyzedAt, reportId, in
   return (
     <section
       aria-labelledby="launch-kit-heading"
-      className="launch-kit bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8"
+      className="launch-kit surface-card p-6 sm:p-8"
     >
       <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
         <div className="min-w-0">
-          <h3 id="launch-kit-heading" className="text-lg font-extrabold text-slate-900">
+          <h3 id="launch-kit-heading" className="flex items-center gap-2.5 card-title">
+            <ListChecks size={18} strokeWidth={1.75} className="text-accent-600 shrink-0" aria-hidden="true" />
             Launch Kit
           </h3>
           <p className="text-sm text-slate-500 mt-1 max-w-xl leading-relaxed">
@@ -84,9 +86,11 @@ export default function LaunchKitCard({ analysis, idea, analyzedAt, reportId, in
         {total > 0 && (
           <div className="flex flex-wrap gap-2">
             <button type="button" onClick={copy} className={`${BUTTON} border-slate-200 text-slate-700 hover:bg-slate-50`}>
+              <ClipboardCopy size={15} strokeWidth={2} aria-hidden="true" />
               Copy Launch Kit
             </button>
-            <button type="button" onClick={() => window.print()} className={`${BUTTON} border-indigo-600 bg-indigo-600 text-white hover:bg-indigo-700`}>
+            <button type="button" onClick={() => window.print()} className={`${BUTTON} border-accent-600 bg-accent-600 text-white hover:bg-accent-700`}>
+              <Printer size={15} strokeWidth={2} aria-hidden="true" />
               Print Launch Kit
             </button>
           </div>
@@ -107,7 +111,7 @@ export default function LaunchKitCard({ analysis, idea, analyzedAt, reportId, in
               <p className="text-sm font-semibold text-slate-500">{percent}%</p>
             </div>
             <div aria-hidden="true" className="mt-2 h-2 rounded-full bg-slate-100 overflow-hidden">
-              <div className="h-full rounded-full bg-indigo-600 transition-[width] duration-300" style={{ width: `${percent}%` }} />
+              <div className="h-full rounded-full bg-accent-600 transition-[width] duration-300" style={{ width: `${percent}%` }} />
             </div>
           </div>
 
@@ -133,7 +137,7 @@ export default function LaunchKitCard({ analysis, idea, analyzedAt, reportId, in
                               type="checkbox"
                               checked={isDone}
                               onChange={() => toggle(item.id)}
-                              className="mt-1 h-5 w-5 shrink-0 cursor-pointer rounded border-slate-300 accent-indigo-600"
+                              className="mt-1 h-5 w-5 shrink-0 cursor-pointer rounded border-slate-300 accent-accent-600"
                             />
                             <span
                               className={`leading-relaxed break-words text-pretty ${

@@ -1,11 +1,12 @@
 import SourceTag from './SourceTag'
 import { ScoreMeter } from '../ScorePreview'
+import { Target } from 'lucide-react'
 
 function bandFor(score) {
   if (score >= 70) {
     return {
       title: 'Strong Potential',
-      pill: 'bg-indigo-50 border-indigo-200 text-indigo-700',
+      pill: 'bg-accent-50 border-accent-200 text-accent-700',
       copy: 'Your idea holds up on the details you provided. Focus on the risks and the first roadmap phase before you spend.',
     }
   }
@@ -30,10 +31,11 @@ export default function ScoreCard({ score }) {
   const band = hasScore ? bandFor(clamped) : null
 
   return (
-    <section className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8">
+    <section className="surface-card p-6 sm:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <h3 className="text-lg font-extrabold text-slate-900">
-          <span aria-hidden="true">🎯</span> Business Viability Score
+        <h3 className="flex items-center gap-2.5 card-title">
+          <Target size={18} strokeWidth={1.75} className="text-accent-600 shrink-0" aria-hidden="true" />
+          Business Viability Score
         </h3>
         <SourceTag source="ai" />
       </div>

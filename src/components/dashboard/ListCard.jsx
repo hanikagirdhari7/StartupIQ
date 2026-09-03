@@ -1,8 +1,10 @@
+import { TriangleAlert } from 'lucide-react'
+
 const VARIANTS = {
   actions: {
-    card: 'border-indigo-100',
-    marker: 'bg-indigo-50 text-indigo-700 border-indigo-100',
-    dot: 'bg-indigo-500',
+    card: 'border-accent-100',
+    marker: 'bg-accent-50 text-accent-700 border-accent-100',
+    dot: 'bg-accent-500',
   },
   marketing: {
     card: 'border-slate-100',
@@ -13,6 +15,8 @@ const VARIANTS = {
     card: 'border-rose-100',
     marker: 'bg-rose-50 text-rose-700 border-rose-100',
     dot: 'bg-rose-500',
+    Icon: TriangleAlert,
+    iconClass: 'text-rose-500',
   },
 }
 
@@ -21,8 +25,13 @@ export default function ListCard({ title, items, variant = 'actions', ordered = 
   const list = Array.isArray(items) ? items.filter(item => typeof item === 'string' && item.trim()) : []
 
   return (
-    <section className={`bg-white rounded-2xl shadow-lg border p-6 sm:p-8 h-full ${styles.card}`}>
-      <h3 className="text-lg font-extrabold text-slate-900 mb-5">{title}</h3>
+    <section className={`bg-white rounded-card shadow-card border p-6 sm:p-8 h-full ${styles.card}`}>
+      <h3 className={`card-title mb-5 ${styles.Icon ? 'flex items-center gap-2.5' : ''}`}>
+        {styles.Icon && (
+          <styles.Icon size={18} strokeWidth={1.75} className={`${styles.iconClass} shrink-0`} aria-hidden="true" />
+        )}
+        {title}
+      </h3>
       {list.length === 0 ? (
         <p className="text-sm text-slate-500">The analysis did not include items for this section.</p>
       ) : (

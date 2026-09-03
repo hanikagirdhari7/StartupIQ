@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { ArrowRight, FolderOpen } from 'lucide-react'
 import { deleteReport, listReports } from '../../services/storage'
 import { formatDate, formatPKR } from '../../utils/format'
 
@@ -14,9 +15,10 @@ export default function RecentReportsCard({ currentId }) {
   }
 
   return (
-    <section className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8">
-      <h3 className="text-lg font-extrabold text-slate-900 mb-2">
-        <span aria-hidden="true">🗂️</span> Your Recent Reports
+    <section className="surface-card p-6 sm:p-8">
+      <h3 className="flex items-center gap-2.5 card-title mb-2">
+        <FolderOpen size={18} strokeWidth={1.75} className="text-accent-600 shrink-0" aria-hidden="true" />
+        Your Recent Reports
       </h3>
       <p className="text-sm text-slate-500 mb-4">
         Saved on this device only, for quick comparison. Remove any of them at any time.
@@ -39,12 +41,19 @@ export default function RecentReportsCard({ currentId }) {
                   <p className="text-sm font-semibold text-slate-800 leading-snug break-words">
                     {entry.summary.title}
                     {isCurrent && (
-                      <span className="ml-2 align-middle text-[10px] font-bold uppercase tracking-wider text-indigo-500">
+                      <span className="ml-2 align-middle text-[10px] font-bold uppercase tracking-wider text-accent-700">
                         Viewing
                       </span>
                     )}
                   </p>
-                  <p className="mt-1 text-xs text-slate-500 break-words">{meta.join(' · ')}</p>
+                  <ul className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-slate-500">
+                    {meta.map((item, index) => (
+                      <li key={`meta-${index}`} className="flex items-center gap-x-2.5">
+                        {index > 0 && <span aria-hidden="true" className="h-2.5 w-px bg-slate-200 shrink-0" />}
+                        <span className="break-words">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
@@ -53,9 +62,10 @@ export default function RecentReportsCard({ currentId }) {
                   ) : (
                     <Link
                       to={`/results?report=${encodeURIComponent(entry.id)}`}
-                      className="text-sm font-bold text-indigo-600 hover:text-indigo-800"
+                      className="inline-flex items-center gap-1.5 text-sm font-bold text-accent-700 hover:text-accent-800 border border-accent-200 hover:bg-accent-50 rounded-lg px-3 py-1.5 transition-colors"
                     >
-                      View <span aria-hidden="true">→</span>
+                      View
+                      <ArrowRight size={15} strokeWidth={2.25} aria-hidden="true" />
                     </Link>
                   )}
                   <button

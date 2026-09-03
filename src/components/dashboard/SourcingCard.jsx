@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ArrowRight, Package, Target } from 'lucide-react'
 import SourceTag from './SourceTag'
 
 // Route vocabulary comes from the analysis (server/schemas/analysisResponse.js).
@@ -121,8 +122,8 @@ function Trait({ label, value }) {
 function Point({ label, value }) {
   if (!value) return null
   return (
-    <div className="bg-white rounded-xl border border-indigo-100 p-4">
-      <p className="text-[11px] font-bold uppercase tracking-wider text-indigo-500 mb-1">{label}</p>
+    <div className="bg-white rounded-xl border border-accent-100 p-4">
+      <p className="text-[11px] font-bold uppercase tracking-wider text-accent-700 mb-1">{label}</p>
       <p className="text-sm text-slate-700 leading-relaxed">{value}</p>
     </div>
   )
@@ -131,8 +132,8 @@ function Point({ label, value }) {
 function NextStep({ text }) {
   if (!text) return null
   return (
-    <div className="mt-6 rounded-xl bg-indigo-600 p-5 text-white">
-      <p className="text-[11px] font-bold uppercase tracking-widest text-indigo-200 mb-1">Next step</p>
+    <div className="mt-6 rounded-xl bg-accent-600 p-5 text-white">
+      <p className="text-[11px] font-bold uppercase tracking-widest text-accent-200 mb-1">Next step</p>
       <p className="text-lg font-bold leading-snug">{text}</p>
     </div>
   )
@@ -140,8 +141,8 @@ function NextStep({ text }) {
 
 function PlatformLink({ link, variant = 'solid' }) {
   const styles = variant === 'solid'
-    ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
-    : 'bg-white hover:bg-indigo-50 text-indigo-700 border border-indigo-200'
+    ? 'bg-accent-600 hover:bg-accent-700 text-white'
+    : 'bg-white hover:bg-accent-50 text-accent-700 border border-accent-200'
   return (
     <span className="inline-flex flex-wrap items-center gap-2">
       <a
@@ -151,7 +152,7 @@ function PlatformLink({ link, variant = 'solid' }) {
         className={`inline-flex items-center gap-2 text-sm font-bold px-4 py-2.5 rounded-xl transition-colors ${styles}`}
       >
         {link.label}
-        <span aria-hidden="true">&#8594;</span>
+        <ArrowRight size={15} strokeWidth={2.25} aria-hidden="true" />
       </a>
       <span className="text-xs text-slate-500">Searches &ldquo;{link.terms}&rdquo;</span>
     </span>
@@ -160,9 +161,12 @@ function PlatformLink({ link, variant = 'solid' }) {
 
 function Card({ children }) {
   return (
-    <section className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8">
+    <section className="surface-card p-6 sm:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-        <h3 className="text-lg font-extrabold text-slate-900">Smart Sourcing</h3>
+        <h3 className="flex items-center gap-2.5 card-title">
+          <Package size={18} strokeWidth={1.75} className="text-accent-600 shrink-0" aria-hidden="true" />
+          Smart Sourcing
+        </h3>
         <SourceTag source="ai" />
       </div>
       {children}
@@ -208,7 +212,7 @@ export default function SourcingCard({ sourcing, location: ideaLocation }) {
             <ul className="space-y-2">
               {digital.map((item, index) => (
                 <li key={`digital-${index}`} className="flex gap-2">
-                  <span className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                  <span className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-accent-500" />
                   <span className="text-slate-600 leading-relaxed">{item}</span>
                 </li>
               ))}
@@ -233,21 +237,22 @@ export default function SourcingCard({ sourcing, location: ideaLocation }) {
       {data.summary && <p className="text-slate-600 leading-relaxed mb-6 text-pretty">{data.summary}</p>}
 
       {/* The single decision first; everything else supports it. */}
-      <div className="rounded-2xl border-2 border-indigo-500 bg-indigo-50/60 p-5 sm:p-6">
-        <p className="text-[11px] font-bold uppercase tracking-widest text-indigo-700 mb-3">
-          &#127919; Best sourcing option
+      <div className="rounded-card border-2 border-accent-600 bg-accent-50/60 p-5 sm:p-6">
+        <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-accent-700 mb-3">
+          <Target size={13} strokeWidth={2} aria-hidden="true" />
+          Best sourcing option
         </p>
         <div className="flex flex-wrap items-center gap-3">
-          <span aria-hidden="true">&#129351;</span>
+          <Package size={22} strokeWidth={1.75} className="text-accent-700 shrink-0" aria-hidden="true" />
           <h4 className="text-xl font-extrabold text-slate-900 leading-tight break-words">
             {routeLabel(best.route)}
           </h4>
-          <span className="bg-white border border-indigo-200 text-indigo-700 rounded-full px-3 py-1 text-xs font-bold tabular-nums">
+          <span className="bg-white border border-accent-200 text-accent-700 rounded-full px-3 py-1 text-xs font-bold tabular-nums">
             {bestScore}/100 fit for you
           </span>
         </div>
         <div className="h-2 max-w-xs bg-white rounded-full overflow-hidden mt-3 mb-4">
-          <div className="h-full bg-indigo-600 rounded-full" style={{ width: `${bestScore}%` }} />
+          <div className="h-full bg-accent-600 rounded-full" style={{ width: `${bestScore}%` }} />
         </div>
         {best.why && <p className="text-slate-700 leading-relaxed mb-5">{best.why}</p>}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -291,7 +296,7 @@ export default function SourcingCard({ sourcing, location: ideaLocation }) {
                   )}
                   <div className="flex flex-wrap gap-2">
                     {route.bestFor && (
-                      <span className="bg-indigo-50 text-indigo-700 border border-indigo-100 rounded-full px-3 py-1 text-xs font-semibold">
+                      <span className="bg-accent-50 text-accent-700 border border-accent-100 rounded-full px-3 py-1 text-xs font-semibold">
                         {route.bestFor}
                       </span>
                     )}
@@ -312,7 +317,7 @@ export default function SourcingCard({ sourcing, location: ideaLocation }) {
                         type="button"
                         onClick={() => toggleDetails(route.route)}
                         aria-expanded={isOpen}
-                        className="text-sm font-semibold text-indigo-600 hover:text-indigo-800"
+                        className="text-sm font-semibold text-accent-600 hover:text-accent-800"
                       >
                         {isOpen ? 'Hide details' : 'See details'}
                       </button>

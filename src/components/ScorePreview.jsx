@@ -1,28 +1,63 @@
+import { useEffect, useState } from 'react'
+
+const RING_RADIUS = 52
+const SWEEP_MS = 700
+
+function prefersReducedMotion() {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  )
+}
+
 export function ScoreMeter({ value }) {
   const pct = Math.min(100, Math.max(0, value))
-  const circumference = 2 * Math.PI * 52
-  const offset = circumference - (pct / 100) * circumference
+  const circumference = 2 * Math.PI * RING_RADIUS
+  const reduceMotion = prefersReducedMotion()
+  const [shown, setShown] = useState(() => (reduceMotion ? pct : 0))
+  const current = reduceMotion ? pct : shown
 
-  const color =
-    pct >= 70 ? '#4f46e5' : pct >= 45 ? '#f59e0b' : '#ef4444'
+  // One clock drives both the arc and the number, so they always agree. The
+  // colour stays on the final value — a band earned mid-count would be a lie.
+  useEffect(() => {
+    if (reduceMotion) return undefined
+    let frame
+    const start = performance.now()
+    const step = now => {
+      const t = Math.min(1, (now - start) / SWEEP_MS)
+      setShown(Math.round(pct * (1 - (1 - t) ** 3)))
+      if (t < 1) frame = requestAnimationFrame(step)
+    }
+    frame = requestAnimationFrame(step)
+    // A hidden document never delivers frames, so the count must not end on the
+    // starting value: this lands the real score whatever happens to the loop.
+    const settle = setTimeout(() => setShown(pct), SWEEP_MS + 100)
+    return () => {
+      cancelAnimationFrame(frame)
+      clearTimeout(settle)
+    }
+  }, [pct, reduceMotion])
+
+  const offset = circumference - (current / 100) * circumference
+  const color = pct >= 70 ? '#21747c' : pct >= 45 ? '#f59e0b' : '#ef4444'
 
   return (
-    <div className="relative inline-flex items-center justify-center w-36 h-36">
+    <div className="relative inline-flex animate-rise items-center justify-center w-36 h-36">
       <svg className="rotate-[-90deg]" width="144" height="144" viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r="52" fill="none" stroke="#e2e8f0" strokeWidth="10" />
+        <circle cx="60" cy="60" r={RING_RADIUS} fill="none" stroke="#e2e8f0" strokeWidth="10" />
         <circle
-          cx="60" cy="60" r="52"
+          cx="60" cy="60" r={RING_RADIUS}
           fill="none"
           stroke={color}
           strokeWidth="10"
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          style={{ transition: 'stroke-dashoffset 1s ease' }}
         />
       </svg>
       <div className="absolute flex flex-col items-center">
-        <span className="text-3xl font-extrabold text-slate-900">{pct}</span>
+        <span className="text-3xl font-extrabold text-slate-900 tabular-nums">{current}</span>
         <span className="text-xs text-slate-500 font-medium">/ 100</span>
       </div>
     </div>
@@ -33,7 +68,7 @@ export function ScoreMeter({ value }) {
 // confident bar for a score the product would paint amber or rose.
 function barClasses(score) {
   if (score === null) return 'bg-slate-200'
-  if (score >= 70) return 'bg-indigo-600'
+  if (score >= 70) return 'bg-accent-600'
   if (score >= 45) return 'bg-amber-500'
   return 'bg-rose-500'
 }
@@ -112,7 +147,7 @@ export default function ScorePreview() {
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 sm:p-10">
+        <div className="surface-card p-8 sm:p-10">
           <div className="flex flex-col md:flex-row gap-8 md:gap-10">
             {/* Focal point: the overall score */}
             <div className="w-full md:w-72 shrink-0 rounded-2xl bg-slate-50 ring-1 ring-slate-100 p-5 sm:p-6 md:justify-center flex flex-col items-center text-center">
@@ -122,7 +157,7 @@ export default function ScorePreview() {
               <div className="bg-white rounded-full p-2.5 sm:p-3 shadow-sm ring-1 ring-slate-100 flex items-center justify-center">
                 <ScoreMeter value={78} />
               </div>
-              <span className="mt-6 inline-block bg-indigo-50 border border-indigo-200 text-indigo-700 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
+              <span className="mt-6 inline-block bg-accent-50 border border-accent-200 text-accent-700 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
                 Strong Potential
               </span>
               <p className="mt-3 text-sm text-slate-500 leading-relaxed text-pretty">

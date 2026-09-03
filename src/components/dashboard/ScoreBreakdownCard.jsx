@@ -1,10 +1,11 @@
 import SourceTag from './SourceTag'
 import { deriveSubScores } from '../../utils/subScores'
+import { ChartColumn } from 'lucide-react'
 
 // Same bands as the overall score ring, so the bars read as part of one system.
 function barClasses(score) {
   if (score === null) return 'bg-slate-200'
-  if (score >= 70) return 'bg-indigo-600'
+  if (score >= 70) return 'bg-accent-600'
   if (score >= 45) return 'bg-amber-500'
   return 'bg-rose-500'
 }
@@ -13,10 +14,11 @@ export default function ScoreBreakdownCard({ analysis, idea }) {
   const rows = deriveSubScores(analysis, idea)
 
   return (
-    <section className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8">
+    <section className="surface-card p-6 sm:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-        <h3 className="text-lg font-extrabold text-slate-900">
-          <span aria-hidden="true">📊</span> Business Score Breakdown
+        <h3 className="flex items-center gap-2.5 card-title">
+          <ChartColumn size={18} strokeWidth={1.75} className="text-accent-600 shrink-0" aria-hidden="true" />
+          Business Score Breakdown
         </h3>
         <SourceTag source="calculated" />
       </div>

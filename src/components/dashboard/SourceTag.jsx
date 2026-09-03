@@ -13,7 +13,7 @@ const SOURCES = {
   },
   ai: {
     label: 'AI estimate',
-    classes: 'border-indigo-100 bg-indigo-50 text-indigo-600',
+    classes: 'border-accent-100 bg-accent-50 text-accent-600',
   },
   calculated: {
     label: 'Calculated on this page',

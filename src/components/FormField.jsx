@@ -1,10 +1,10 @@
 export const inputClasses = (hasError) =>
   [
     'w-full rounded-xl border bg-white px-4 py-3 text-slate-900 placeholder-slate-400',
-    'transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500/40',
+    'transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500/40',
     hasError
       ? 'border-rose-300 focus:border-rose-400'
-      : 'border-slate-200 focus:border-indigo-500',
+      : 'border-slate-200 focus:border-accent-500',
   ].join(' ')
 
 export default function FormField({ label, required, error, hint, children }) {

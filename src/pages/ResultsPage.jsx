@@ -12,6 +12,7 @@ import ReportHeader from '../components/dashboard/ReportHeader'
 import ScoreBreakdownCard from '../components/dashboard/ScoreBreakdownCard'
 import ScoreCard from '../components/dashboard/ScoreCard'
 import SourcingCard from '../components/dashboard/SourcingCard'
+import { ArrowRight, House } from 'lucide-react'
 import { getLatestReport, getReport, saveReport } from '../services/storage'
 
 export default function ResultsPage() {
@@ -109,9 +110,9 @@ export default function ResultsPage() {
 
           <RecentReportsCard currentId={currentId} />
 
-          <div className="bg-indigo-600 rounded-2xl shadow-xl p-6 sm:p-8">
+          <div className="bg-accent-600 rounded-card shadow-raise p-6 sm:p-8">
             <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-2">Ready for the next step?</h2>
-            <p className="text-indigo-100 mb-6 max-w-xl">
+            <p className="text-accent-100 mb-6 max-w-xl">
               Work through your Launch Kit step by step, or validate another idea while this report
               is still fresh.
             </p>
@@ -119,15 +120,17 @@ export default function ResultsPage() {
               <button
                 type="button"
                 onClick={() => navigate('/validate')}
-                className="bg-white text-indigo-700 font-bold px-6 py-3 rounded-xl hover:bg-indigo-50 transition-colors"
+                className="inline-flex items-center gap-2 bg-white text-accent-700 font-bold px-6 py-3 rounded-xl hover:bg-accent-50 transition-colors"
               >
                 Validate Another Idea
+                <ArrowRight size={17} strokeWidth={2.25} aria-hidden="true" />
               </button>
               <button
                 type="button"
                 onClick={() => navigate('/')}
-                className="border border-indigo-400 text-white font-semibold px-6 py-3 rounded-xl hover:bg-indigo-700 transition-colors"
+                className="inline-flex items-center gap-2 border border-accent-400 text-white font-semibold px-6 py-3 rounded-xl hover:bg-accent-700 transition-colors"
               >
+                <House size={17} strokeWidth={2} aria-hidden="true" />
                 Back to Home
               </button>
             </div>

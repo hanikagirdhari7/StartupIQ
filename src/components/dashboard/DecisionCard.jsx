@@ -1,4 +1,5 @@
 import SourceTag from './SourceTag'
+import { TriangleAlert } from 'lucide-react'
 import { deriveDecision } from '../../utils/decision'
 
 const STYLES = {
@@ -48,7 +49,7 @@ export default function DecisionCard({ analysis, idea }) {
   return (
     <section
       aria-labelledby="decision-heading"
-      className={`rounded-2xl shadow-xl border-2 p-6 sm:p-8 ${styles.card}`}
+      className={`rounded-card shadow-card border-2 p-6 sm:p-8 ${styles.card}`}
     >
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <p className="text-[11px] font-bold uppercase tracking-widest text-slate-500">
@@ -90,11 +91,11 @@ export default function DecisionCard({ analysis, idea }) {
           <ul className="space-y-2">
             {decision.blockers.map(blocker => (
               <li key={blocker} className="flex gap-3">
-                <span
+                <TriangleAlert
+                  size={16}
+                  strokeWidth={1.75}
                   aria-hidden="true"
-                  className={`shrink-0 mt-2 w-1.5 h-1.5 rounded-full ${
-                    decision.key === 'go' ? 'bg-amber-500' : 'bg-rose-500'
-                  }`}
+                  className={`mt-1 shrink-0 ${decision.key === 'go' ? 'text-amber-500' : 'text-rose-500'}`}
                 />
                 <span className="text-slate-700 leading-relaxed">{blocker}</span>
               </li>

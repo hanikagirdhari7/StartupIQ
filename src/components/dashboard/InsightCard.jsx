@@ -2,7 +2,7 @@ const TONES = {
   neutral: {
     low: 'bg-slate-100 text-slate-700 border-slate-200',
     moderate: 'bg-amber-50 text-amber-700 border-amber-200',
-    high: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+    high: 'bg-accent-50 text-accent-700 border-accent-200',
   },
   risk: {
     low: 'bg-emerald-50 text-emerald-700 border-emerald-200',
@@ -29,7 +29,7 @@ export function InsightRow({ label, children }) {
   if (!children) return null
   return (
     <div className="min-w-0">
-      <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">{label}</p>
+      <p className="meta-label mb-1">{label}</p>
       <p className="text-slate-600 leading-relaxed break-words text-pretty">{children}</p>
     </div>
   )
@@ -37,7 +37,7 @@ export function InsightRow({ label, children }) {
 
 export default function InsightCard({ title, badge, children }) {
   return (
-    <section className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8 h-full">
+    <section className="surface-card p-6 sm:p-8 h-full">
       <div className="flex items-start justify-between gap-4 mb-5">
         <h3 className="text-lg font-extrabold text-slate-900 leading-tight text-balance">{title}</h3>
         {badge}

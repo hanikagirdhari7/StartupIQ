@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Calculator } from 'lucide-react'
 import { formatPKR } from '../../utils/format'
 
 // A "what if" sandbox. It reads the AI estimates as a starting point and lets
@@ -51,7 +52,7 @@ function Field({ label, hint, value, onChange }) {
           value={value}
           onChange={event => onChange(event.target.value)}
           placeholder="0"
-          className="w-full border border-slate-200 rounded-xl bg-white pl-11 pr-3 py-2.5 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="w-full border border-slate-200 rounded-xl bg-white pl-11 pr-3 py-2.5 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
         />
       </span>
       <span className="block text-[11px] text-slate-400 mt-1 tabular-nums">{hint}</span>
@@ -142,12 +143,13 @@ export default function ScenarioCalculator({ financialFit, budget }) {
   ]
 
   return (
-    <div className="mt-6 rounded-2xl border border-indigo-100 bg-indigo-50/50 p-5 sm:p-6">
+    <div className="mt-6 rounded-2xl border border-accent-100 bg-accent-50/50 p-5 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
-        <h4 className="text-base font-extrabold text-slate-900">
-          <span aria-hidden="true">🧮</span> What if you change the numbers?
+        <h4 className="flex items-center gap-2 text-base font-extrabold text-slate-900">
+          <Calculator size={16} strokeWidth={1.75} className="text-accent-600 shrink-0" aria-hidden="true" />
+          What if you change the numbers?
         </h4>
-        <span className="border border-indigo-200 bg-white text-indigo-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
+        <span className="border border-accent-200 bg-white text-accent-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
           Your scenario
         </span>
       </div>
@@ -189,7 +191,7 @@ export default function ScenarioCalculator({ financialFit, budget }) {
         <button
           type="button"
           onClick={() => setDraft(baseline)}
-          className="mt-4 text-sm font-semibold text-indigo-600 hover:text-indigo-800"
+          className="mt-4 text-sm font-semibold text-accent-600 hover:text-accent-800"
         >
           Reset to the AI estimates
         </button>

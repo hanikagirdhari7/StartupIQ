@@ -1,5 +1,41 @@
 @import "tailwindcss";
 
+/* StartupIQ's one accent: a deep petrol teal. It sits on the slate/off-white
+   palette like a deliberate brand colour rather than a framework default, and
+   stays far enough from the app's semantic emerald / amber / rose (good, caution,
+   risk) that an accent never reads as a verdict about the founder's idea. */
+@theme {
+  --color-accent-50: #f2f8f8;
+  --color-accent-100: #dfeeef;
+  --color-accent-200: #c1dfe1;
+  --color-accent-300: #92c5c9;
+  --color-accent-400: #5ba4ab;
+  --color-accent-500: #36838c;
+  --color-accent-600: #21747c;
+  --color-accent-700: #1a5c63;
+  --color-accent-800: #174b52;
+  --color-accent-900: #164047;
+
+  /* One card shell for the whole report: a hairline border, a 16 px corner and a
+     shadow that lifts off the page without the heavy bloom of a template. */
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 10px 24px -14px rgb(15 23 42 / 0.12);
+  --shadow-raise: 0 2px 4px rgb(15 23 42 / 0.05), 0 18px 40px -18px rgb(15 23 42 / 0.18);
+  --radius-card: 1rem;
+
+  --animate-rise: rise 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -18,11 +54,43 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Every report card shares one shell so borders, corners and depth never drift
+   between sections. Padding stays on the component: a dense meter card and a
+   long-form decision card deliberately sit at different depths. */
+@utility surface-card {
+  background-color: #fff;
+  border: 1px solid var(--color-slate-100);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Section titles read as one system: same size, weight and tracking everywhere. */
+@utility card-title {
+  font-size: var(--text-lg);
+  line-height: 1.35;
+  font-weight: 800;
+  letter-spacing: -0.011rem;
+  color: var(--color-slate-900);
+}
+
+/* Small uppercase labels above a value. Used for metadata rather than headings. */
+@utility meta-label {
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-slate-400);
+}
+
 /* Tailwind's focus utilities only cover the form fields, so keyboard users get a
    visible ring on links and buttons from here instead of nothing at all. */
 a:focus-visible,
-button:focus-visible {
-  outline: 2px solid #4f46e5;
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-accent-600);
   outline-offset: 2px;
   border-radius: 0.5rem;
 }

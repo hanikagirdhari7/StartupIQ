@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { CircleCheck, Lightbulb, TriangleAlert } from 'lucide-react'
 
 function MetricCard({ label, value, trend, tone = 'slate' }) {
   const tones = {
@@ -18,16 +19,16 @@ function MetricCard({ label, value, trend, tone = 'slate' }) {
   )
 }
 
-function InsightRow({ icon, label, text, type }) {
+function InsightRow({ icon: Icon, label, text, type }) {
   const styles = {
     strength: 'bg-emerald-50 border-emerald-200 text-emerald-700',
     risk: 'bg-amber-50 border-amber-200 text-amber-700',
-    tip: 'bg-indigo-50 border-indigo-200 text-indigo-700',
+    tip: 'bg-accent-50 border-accent-200 text-accent-700',
   }
   return (
     <div className={`p-4 rounded-xl border min-w-0 ${styles[type]}`}>
       <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest mb-1.5">
-        <span aria-hidden="true" className="text-sm leading-none">{icon}</span>
+        <Icon size={14} strokeWidth={2} aria-hidden="true" />
         {label}
       </p>
       <p className="text-sm leading-snug text-pretty">{text}</p>
@@ -40,7 +41,7 @@ export default function DashboardPreview() {
     <section id="dashboard-preview" className="py-20 bg-slate-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <p className="text-indigo-600 font-semibold text-sm uppercase tracking-widest mb-3">Dashboard Preview</p>
+          <p className="text-accent-600 font-semibold text-sm uppercase tracking-widest mb-3">Dashboard Preview</p>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4 text-balance">
             Practical Feasibility, Built for Early Founders
           </h2>
@@ -50,7 +51,7 @@ export default function DashboardPreview() {
         </div>
 
         {/* Dashboard mock */}
-        <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+        <div className="bg-white rounded-card shadow-raise border border-slate-200 overflow-hidden">
           {/* Title bar */}
           <div className="bg-slate-800 px-4 py-3 flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-rose-400" />
@@ -68,14 +69,18 @@ export default function DashboardPreview() {
                 <h3 className="text-xl font-bold text-slate-900 leading-snug text-balance break-words">
                   “Online Women’s Clothing Boutique”
                 </h3>
-                <p className="text-sm text-slate-500 mt-1 break-words">
-                  Ecommerce · Lahore, Pakistan · Budget PKR 150,000
+                <p className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm text-slate-500">
+                  <span>Ecommerce</span>
+                  <span aria-hidden="true" className="h-3.5 w-px bg-slate-200 shrink-0" />
+                  <span>Lahore, Pakistan</span>
+                  <span aria-hidden="true" className="h-3.5 w-px bg-slate-200 shrink-0" />
+                  <span className="break-words">Budget PKR 150,000</span>
                 </p>
               </div>
-              <div className="bg-indigo-50 border border-indigo-200 rounded-xl px-5 py-3 shrink-0 text-center sm:text-right">
-                <p className="text-[11px] text-indigo-500 font-bold uppercase tracking-wider">Viability Score</p>
-                <p className="text-4xl font-extrabold text-indigo-700 leading-none tabular-nums">
-                  78<span className="text-base font-bold text-indigo-400">/100</span>
+              <div className="bg-accent-50 border border-accent-200 rounded-xl px-5 py-3 shrink-0 text-center sm:text-right">
+                <p className="text-[11px] text-accent-700 font-bold uppercase tracking-wider">Viability Score</p>
+                <p className="text-4xl font-extrabold text-accent-700 leading-none tabular-nums">
+                  78<span className="text-base font-bold text-accent-600">/100</span>
                 </p>
               </div>
             </div>
@@ -91,19 +96,19 @@ export default function DashboardPreview() {
             {/* Insights */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
               <InsightRow
-                icon="✅"
+                icon={CircleCheck}
                 label="Demand"
                 type="strength"
                 text="Strong demand for affordable, trend-led women’s fashion through Instagram, TikTok and online marketplaces."
               />
               <InsightRow
-                icon="⚠️"
+                icon={TriangleAlert}
                 label="Risk"
                 type="risk"
                 text="The market is crowded and price-sensitive. Product selection, sizing consistency and reliable delivery need to stand out."
               />
               <InsightRow
-                icon="💡"
+                icon={Lightbulb}
                 label="Action"
                 type="tip"
                 text="Start with a focused collection and small inventory. Test demand through Instagram and WhatsApp, then scale the best-selling styles."
@@ -117,7 +122,7 @@ export default function DashboardPreview() {
                 <div className="space-y-2">
                   {['Week 1: Validate with 10 potential customers via Instagram DMs', 'Week 2: Compare 3 wholesale clothing suppliers on price and sizing', 'Week 3: Create product photos & launch Daraz storefront', 'Week 4: Run first PKR 2,000 ad campaign targeting women aged 18–35'].map(item => (
                     <div key={item} className="flex items-center gap-2 text-sm text-slate-700">
-                      <span className="w-4 h-4 rounded-full border-2 border-indigo-300 shrink-0" />
+                      <span className="w-4 h-4 rounded-full border-2 border-accent-300 shrink-0" />
                       {item}
                     </div>
                   ))}
@@ -126,7 +131,7 @@ export default function DashboardPreview() {
               <div className="absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-sm">
                 <div className="text-center">
                   <p className="text-slate-700 font-bold text-lg mb-2">This is what your launch plan looks like</p>
-                  <Link to="/validate" className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
+                  <Link to="/validate" className="bg-accent-600 hover:bg-accent-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
                     Validate Your Idea
                   </Link>
                 </div>

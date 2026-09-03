@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ChevronDown, CircleAlert, CircleCheck, Info, Lightbulb, TriangleAlert, Wallet } from 'lucide-react'
 import ScenarioCalculator from './ScenarioCalculator'
 import SourceTag from './SourceTag'
 import { formatPKR as money } from '../../utils/format'
@@ -6,17 +7,17 @@ import { formatPKR as money } from '../../utils/format'
 const STATUS = {
   goodToTest: {
     label: 'Good for testing',
-    dot: '🟢',
+    Icon: CircleCheck,
     classes: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   },
   needsCaution: {
     label: 'Needs caution',
-    dot: '🟡',
+    Icon: TriangleAlert,
     classes: 'bg-amber-50 text-amber-700 border-amber-200',
   },
   financiallyChallenging: {
     label: 'Financially challenging',
-    dot: '🔴',
+    Icon: CircleAlert,
     classes: 'bg-rose-50 text-rose-700 border-rose-200',
   },
 }
@@ -29,9 +30,16 @@ function Row({ label, value, muted }) {
   return (
     <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3 border-b border-slate-100 last:border-0">
       <dt className="text-sm text-slate-500">{label}</dt>
-      <dd className={`text-base font-extrabold tabular-nums break-words ${muted ? 'text-slate-400 font-semibold text-sm' : 'text-slate-900'}`}>
-        {value}
-      </dd>
+      {muted ? (
+        <dd className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-500">
+          <Info size={13} strokeWidth={1.75} className="shrink-0 text-slate-400" aria-hidden="true" />
+          <span className="break-words">{value}</span>
+        </dd>
+      ) : (
+        <dd className="text-base font-extrabold tabular-nums break-words text-slate-900">
+          {value}
+        </dd>
+      )}
     </div>
   )
 }
@@ -77,16 +85,18 @@ export default function FinancialFitCard({ financialFit, budget }) {
     : null
 
   return (
-    <section className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8">
+    <section className="surface-card p-6 sm:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
-        <h3 className="text-lg font-extrabold text-slate-900">
-          <span aria-hidden="true">💰</span> Financial Fit
+        <h3 className="flex items-center gap-2.5 card-title">
+          <Wallet size={18} strokeWidth={1.75} className="text-accent-600 shrink-0" aria-hidden="true" />
+          Financial Fit
         </h3>
         <div className="flex flex-wrap items-center gap-2">
           <SourceTag source="ai" />
           {status && (
-            <span className={`border rounded-full px-4 py-1.5 text-sm font-bold ${status.classes}`}>
-              <span aria-hidden="true">{status.dot}</span> {status.label}
+            <span className={`inline-flex items-center gap-1.5 border rounded-full px-3.5 py-1.5 text-sm font-bold ${status.classes}`}>
+              <status.Icon size={15} strokeWidth={2} aria-hidden="true" />
+              {status.label}
             </span>
           )}
         </div>
@@ -124,23 +134,29 @@ export default function FinancialFitCard({ financialFit, budget }) {
         />
       </dl>
 
-      <p className="mt-4 text-xs text-slate-500 leading-relaxed">
-        <span className="font-semibold text-slate-700">AI-generated estimates: </span>
-        Pricing and cost figures are estimates based on the information provided and should be
-        validated with suppliers and current market prices. Where they apply, a per-sale cost already
-        includes packaging, courier and the expected loss from failed or returned deliveries — it is not
-        only what the stock cost. What is left after it is therefore not profit either: marketing, rent and
-        your own time come out of that. These figures are guidance, not verified live market data.
-      </p>
+      <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50/70 p-4">
+        <p className="flex items-center gap-1.5 meta-label mb-1.5">
+          <Info size={13} strokeWidth={2} className="text-slate-400" aria-hidden="true" />
+          AI-generated estimates
+        </p>
+        <p className="text-xs text-slate-500 leading-relaxed text-pretty">
+          Pricing and cost figures are estimates based on the information provided and should be
+          validated with suppliers and current market prices. Where they apply, a per-sale cost already
+          includes packaging, courier and the expected loss from failed or returned deliveries — it is not
+          only what the stock cost. What is left after it is therefore not profit either: marketing, rent and
+          your own time come out of that. These figures are guidance, not verified live market data.
+        </p>
+      </div>
 
       {breakEvenGap && (
         <p className="mt-3 text-sm text-slate-500 leading-relaxed">{breakEvenGap}</p>
       )}
 
       {data.verdict && (
-        <div className="mt-5 rounded-xl bg-indigo-50 border border-indigo-100 p-5">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-indigo-600 mb-1">
-            <span aria-hidden="true">💡</span> StartupIQ says
+        <div className="mt-5 rounded-xl bg-accent-50 border border-accent-100 p-5">
+          <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-accent-700 mb-1">
+            <Lightbulb size={13} strokeWidth={2} aria-hidden="true" />
+            StartupIQ says
           </p>
           <p className="text-slate-800 leading-relaxed font-medium">{data.verdict}</p>
         </div>
@@ -161,8 +177,14 @@ export default function FinancialFitCard({ financialFit, budget }) {
             type="button"
             onClick={() => setShowCalculation(open => !open)}
             aria-expanded={showCalculation}
-            className="text-sm font-semibold text-indigo-600 hover:text-indigo-800"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-700 hover:text-accent-800"
           >
+            <ChevronDown
+              size={15}
+              strokeWidth={2.25}
+              aria-hidden="true"
+              className={`transition-transform duration-200 ${showCalculation ? 'rotate-180' : ''}`}
+            />
             {showCalculation ? 'Hide calculation' : 'See calculation'}
           </button>
           {showCalculation && (

@@ -4,6 +4,7 @@ import Footer from '../components/Footer'
 import FormField, { inputClasses } from '../components/FormField'
 import Navbar from '../components/Navbar'
 import { analyzeIdea } from '../services/api'
+import { ArrowRight, LoaderCircle, Lock } from 'lucide-react'
 
 const BUSINESS_TYPES = ['Product', 'Service', 'Ecommerce', 'Local Business', 'SaaS / App', 'Other']
 
@@ -107,8 +108,8 @@ export default function IdeaFormPage() {
 
           {/* Page header */}
           <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-200 text-indigo-700 text-sm font-medium px-4 py-1.5 rounded-full mb-5">
-              <span className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-2 bg-accent-50 border border-accent-200 text-accent-700 text-sm font-medium px-4 py-1.5 rounded-full mb-5">
+              <span className="w-2 h-2 bg-accent-500 rounded-full animate-pulse" />
               Step 1 of 4
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3 leading-tight tracking-tight">
@@ -121,7 +122,7 @@ export default function IdeaFormPage() {
           </div>
 
           {/* Form card */}
-          <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-6 sm:p-10">
+          <div className="surface-card p-6 sm:p-10">
             <form onSubmit={handleSubmit} noValidate>
               <div className="space-y-6">
 
@@ -233,12 +234,23 @@ export default function IdeaFormPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-lg px-8 py-4 rounded-xl transition-all shadow-lg hover:shadow-indigo-200 hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 bg-accent-600 hover:bg-accent-700 active:bg-accent-800 text-white font-bold text-lg px-8 py-4 rounded-xl transition-all shadow-lg hover:shadow-accent-200 hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
               >
-                {isSubmitting ? 'Analyzing your idea…' : 'Analyze My Idea →'}
+                {isSubmitting ? (
+                  <>
+                    <LoaderCircle size={19} strokeWidth={2.25} className="animate-spin" aria-hidden="true" />
+                    Analyzing your idea…
+                  </>
+                ) : (
+                  <>
+                    Analyze My Idea
+                    <ArrowRight size={19} strokeWidth={2.25} aria-hidden="true" />
+                  </>
+                )}
               </button>
 
-              <p className="mt-4 text-center text-xs text-slate-400">
+              <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-xs text-slate-400">
+                <Lock size={13} strokeWidth={1.75} aria-hidden="true" />
                 Your idea is private. No data is shared without your consent.
               </p>
             </form>
