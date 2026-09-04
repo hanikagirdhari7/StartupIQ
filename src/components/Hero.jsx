@@ -43,10 +43,20 @@ export default function Hero() {
           </a>
         </div>
 
-        <p className="mt-5 sm:mt-6 flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1.5 text-sm text-slate-400">
-          <span>Clear feasibility &amp; financial breakdown</span>
-          <span aria-hidden="true" className="hidden sm:block h-3.5 w-px bg-slate-200" />
-          <span>Free to use</span>
+        <p className="mt-5 sm:mt-6 text-sm text-slate-400 leading-relaxed text-balance">
+          <span className="whitespace-nowrap">AI-powered validation</span>{' '}
+          <span className="whitespace-nowrap">
+            <span className="text-slate-300" aria-hidden="true">
+              •
+            </span>{' '}
+            Financial clarity
+          </span>{' '}
+          <span className="whitespace-nowrap">
+            <span className="text-slate-300" aria-hidden="true">
+              •
+            </span>{' '}
+            Actionable launch plan
+          </span>
         </p>
       </div>
     </section>

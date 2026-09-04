@@ -26,10 +26,20 @@ export default function ClosingCTA() {
           </button>
         </div>
 
-        <p className="mt-7 flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1.5 text-sm font-medium text-accent-100">
-          <span>No account to create</span>
-          <span aria-hidden="true" className="hidden sm:block h-3.5 w-px bg-accent-600" />
-          <span>Your reports stay in this browser</span>
+        <p className="mt-7 text-sm font-medium text-accent-100 leading-relaxed text-balance">
+          <span className="whitespace-nowrap">Free to use</span>{' '}
+          <span className="whitespace-nowrap">
+            <span className="text-accent-600" aria-hidden="true">
+              •
+            </span>{' '}
+            No sign-up required
+          </span>{' '}
+          <span className="whitespace-nowrap">
+            <span className="text-accent-600" aria-hidden="true">
+              •
+            </span>{' '}
+            Reports saved locally
+          </span>
         </p>
 
         <ul className="mt-10 flex flex-wrap justify-center gap-2 sm:gap-3 text-sm text-accent-100">
