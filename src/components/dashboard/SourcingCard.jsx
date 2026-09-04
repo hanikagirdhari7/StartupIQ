@@ -101,14 +101,18 @@ function toneFor(value) {
 //
 // `searchTerms` is still model prose, and it can carry the fulfilment wording meant
 // for the card body — "(Nationwide via courier delivery)" — straight into a search
-// box, where only the product words are useful. Hyphens inside a phrase survive;
-// separators, brackets and delivery qualifiers do not. The bracket patterns allow a
-// missing closer because the model sometimes truncates its own parenthetical, and a
-// half-written "(" would otherwise carry the whole explanation into the query.
+// box, where only the product words are useful. Hyphens inside a phrase and the
+// comma between a city and its country survive; brackets, delivery asides and
+// clause-ending punctuation do not. The bracket patterns allow a missing closer
+// because the model sometimes truncates its own parenthetical, and a half-written
+// "(" would otherwise carry the whole explanation into the query.
 const SEARCH_NOISE = [
   /\([^)]*\)?/g,
   /\[[^\]]*\]?/g,
   /\{[^}]*\}?/g,
+  // The same aside unpunctuated: "with nationwide delivery across Pakistan via
+  // courier". Bounded by punctuation so it stops at the end of its own clause.
+  /\bwith\s+[^,.;:!)]*\b(?:delivery|shipping|courier|dispatch|freight|post)\b[^,.;:!)]*/gi,
   /\b(?:via|by|through)\s+(?:courier|delivery|post|air|sea|road)(?:\s+delivery)?\b/gi,
   /\b(?:nationwide|countrywide|statewide|door[\s-]*to[\s-]*door(?:\s+(?:delivery|shipping))?|home\s+delivery|online\s+delivery|doorstep\s+delivery|cash\s+on\s+delivery|cod)\b/gi,
   /\b(?:all|everywhere)\s+(?:over|across|in)\s+(?:the\s+)?(?:country|nation|city)\b/gi,
@@ -119,11 +123,13 @@ function cleanSearchTerms(value) {
   for (const pattern of SEARCH_NOISE) text = text.replace(pattern, ' ')
   return text
     .replace(/[()[\]{}]+/g, ' ')
-    .replace(/[,;:.!?]+/g, ' ')
+    .replace(/[;:.!?]+/g, ' ')
     .replace(/\s+[-–—/|]\s+/g, ' ')
+    .replace(/\s*,\s*/g, ', ')
     .replace(/\s+/g, ' ')
     .trim()
     .replace(/^[-–—/&]+|[-–—/&]+$/g, '')
+    .replace(/,+$/, '')
     .trim()
 }
 
