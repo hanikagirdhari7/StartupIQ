@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Info } from 'lucide-react'
 
 const RING_RADIUS = 52
 const SWEEP_MS = 700
@@ -79,7 +80,10 @@ function SubScore({ label, value, basis }) {
       <div className="flex items-baseline justify-between gap-4 mb-2">
         <span className="text-sm font-medium text-slate-600">{label}</span>
         {value === null ? (
-          <span className="text-xs font-semibold text-slate-400">Not enough data</span>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-500">
+            <Info size={12} strokeWidth={2} className="shrink-0 text-slate-400" aria-hidden="true" />
+            Not enough data
+          </span>
         ) : (
           <span className="text-sm font-bold text-slate-900 tabular-nums">
             {value}
@@ -87,12 +91,11 @@ function SubScore({ label, value, basis }) {
           </span>
         )}
       </div>
-      <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-        <div
-          className={`h-full rounded-full ${barClasses(value)}`}
-          style={{ width: `${value === null ? 0 : value}%` }}
-        />
-      </div>
+      {value !== null && (
+        <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+          <div className={`h-full rounded-full ${barClasses(value)}`} style={{ width: `${value}%` }} />
+        </div>
+      )}
       <p className="text-xs text-slate-400 leading-relaxed mt-1.5 text-pretty">{basis}</p>
     </li>
   )
@@ -178,8 +181,8 @@ export default function ScorePreview() {
                 ))}
               </ul>
               <p className="mt-5 text-xs text-slate-400 leading-relaxed text-pretty">
-                An empty bar means the report returned no figure to score, so nothing was guessed. In a real
-                report, every bar shows the numbers behind it.
+                A factor with no bar is one the report returned no figure for, so nothing was guessed. In
+                a real report, every bar shows the numbers behind it.
               </p>
             </div>
           </div>

@@ -120,7 +120,7 @@ export default function ScenarioCalculator({ financialFit, budget }) {
       value: margin === null
         ? missing(profit === null ? 'Enter a selling price and a cost per sale.' : 'Needs a selling price above 0.')
         : { text: `${Math.round(margin)}%` },
-      note: margin === null ? null : 'Share of each sale left after its full cost. Marketing, rent and your own time still come out of it.',
+      note: margin === null ? null : 'Share of each sale left after its full cost.',
     },
     {
       label: 'Sales to recover setup costs',
@@ -198,9 +198,7 @@ export default function ScenarioCalculator({ financialFit, budget }) {
       )}
 
       <p className="mt-4 text-xs text-slate-500 leading-relaxed">
-        Scenario Estimate: worked out only from the amounts typed above. It uses no market data and
-        predicts nothing; real supplier prices, costs and sales volume will differ, so verify them
-        before you spend.
+        Scenario Estimate: worked out only from the amounts typed above. It uses no market data and predicts nothing.
       </p>
     </div>
   )

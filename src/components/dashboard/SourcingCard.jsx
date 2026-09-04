@@ -98,9 +98,32 @@ function toneFor(value) {
 
 // Links are built here from a fixed platform list, never taken from the model,
 // so no invented URL can reach the page.
+//
+// `searchTerms` is still model prose, and it can carry the fulfilment wording meant
+// for the card body — "(Nationwide via courier delivery)" — straight into a search
+// box, where only the product words are useful. Hyphens inside a phrase survive;
+// separators, brackets and delivery qualifiers do not.
+const SEARCH_NOISE = [
+  /\([^)]*\)/g,
+  /\b(?:via|by|through)\s+(?:courier|delivery|post|air|sea|road)(?:\s+delivery)?\b/gi,
+  /\b(?:nationwide|countrywide|statewide|door[\s-]*to[\s-]*door(?:\s+(?:delivery|shipping))?|home\s+delivery|cash\s+on\s+delivery|cod)\b/gi,
+  /\b(?:all|everywhere)\s+(?:over|across|in)\s+(?:the\s+)?(?:country|nation|city)\b/gi,
+]
+
+function cleanSearchTerms(value) {
+  let text = String(value || '')
+  for (const pattern of SEARCH_NOISE) text = text.replace(pattern, ' ')
+  return text
+    .replace(/[,;:.!?]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/^[-/&]+|[-/&]+$/g, '')
+    .trim()
+}
+
 function searchLink(route, location) {
   const config = routeConfig(route.route)
-  const terms = String(route.searchTerms || '').trim()
+  const terms = cleanSearchTerms(route.searchTerms)
   if (!config || typeof config.search !== 'function' || !terms) return null
   const query = config.useLocation && location ? `${terms} ${location}` : terms
   return {

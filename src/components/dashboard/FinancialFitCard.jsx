@@ -219,10 +219,6 @@ export default function FinancialFitCard({ financialFit, budget }) {
       )}
 
       <ScenarioCalculator financialFit={financialFit} budget={budget} />
-
-      <p className="mt-4 text-xs text-slate-400 leading-relaxed">
-        Nothing here guarantees a sale, a margin or a profit.
-      </p>
     </section>
   )
 }

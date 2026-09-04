@@ -18,7 +18,7 @@ const OUTPUT_CONTRACT = {
   },
   competition: {
     level: 'string, exactly one of: low | moderate | high',
-    existingAlternatives: 'string, the kinds of alternatives they would consider instead — categories only, never a named company or brand',
+    existingAlternatives: 'string, the kinds of alternatives they would consider instead — categories only: never a named company, brand, shop, supplier or marketplace seller, and never a competitor price, rating, review count, market share or revenue figure, which you have no way to know',
     differentiation: 'string, how this idea can realistically stand out',
   },
   pricingRecommendation: {
@@ -67,7 +67,7 @@ const OUTPUT_CONTRACT = {
   launchRoadmap: [
     {
       period: 'string, e.g. "Week 1-2"',
-      actions: ['string, one concrete step'],
+      actions: ['string, one concrete step. If a step names an inventory quantity, it must fit the budget left after fixedCosts at the costEstimate given above, or that same step must say the rest is bought by reinvesting early sales'],
     },
   ],
   nextActions: ['string, one immediate action, ordered by impact'],

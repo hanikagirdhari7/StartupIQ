@@ -65,8 +65,7 @@ export default function ScoreCard({ score }) {
             {band ? band.copy : 'The AI response did not include a viability score, so none is shown here.'}
           </p>
           <p className="text-xs text-slate-400 leading-relaxed max-w-xl">
-            This score is an AI estimate based only on the idea, customer, market and budget you
-            submitted. It is guidance for your own judgement — not a guarantee of business results.
+            This score is an AI estimate based only on the idea, customer, market and budget you submitted.
           </p>
         </div>
       </div>
