@@ -22,8 +22,8 @@ export default function Hero() {
         </h1>
 
         <p className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed text-pretty">
-          StartupIQ turns your idea into a clear verdict — demand, competition, pricing, unit economics and
-          the risks — and lays out the launch plan to act on it, so you stop guessing and start building
+          StartupIQ turns your idea into a clear verdict on demand, competition, pricing, unit economics,
+          and risks. It then gives you a practical launch plan so you can stop guessing and start building
           with confidence.
         </p>
 

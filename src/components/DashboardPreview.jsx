@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { CircleCheck, Lightbulb, TriangleAlert } from 'lucide-react'
+import { CircleCheck, Lightbulb, Lock, TriangleAlert } from 'lucide-react'
 
 function MetricCard({ label, value, trend, tone = 'slate' }) {
   const tones = {
@@ -131,7 +131,8 @@ export default function DashboardPreview() {
               <div className="absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-sm">
                 <div className="text-center">
                   <p className="text-slate-700 font-bold text-lg mb-2">This is what your launch plan looks like</p>
-                  <Link to="/validate" className="bg-accent-600 hover:bg-accent-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
+                  <Link to="/validate" className="inline-flex items-center gap-1.5 bg-accent-600 hover:bg-accent-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
+                    <Lock size={13} strokeWidth={1.75} aria-hidden="true" />
                     Validate Your Idea
                   </Link>
                 </div>
