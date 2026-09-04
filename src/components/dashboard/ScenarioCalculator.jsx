@@ -129,7 +129,7 @@ export default function ScenarioCalculator({ financialFit, budget }) {
         : { text: `About ${recoverSales} sale${recoverSales === 1 ? '' : 's'}` },
       note: recoverSales === null
         ? null
-        : 'A count, not a date — how long it takes depends on your own sales volume.',
+        : 'A count, not a date. How long it takes depends on your own sales volume.',
     },
     {
       label: 'Budget left after setup costs',
@@ -154,7 +154,7 @@ export default function ScenarioCalculator({ financialFit, budget }) {
         </span>
       </div>
       <p className="text-sm text-slate-600 mb-5">
-        This starts from the AI estimates above. Change any amount to see what it would mean — the
+        This starts from the AI estimates above. Change any amount to see what it would mean. The
         report itself stays untouched, and for a monthly service read each
         &ldquo;sale&rdquo; as one customer&apos;s month.
       </p>
@@ -198,7 +198,7 @@ export default function ScenarioCalculator({ financialFit, budget }) {
       )}
 
       <p className="mt-4 text-xs text-slate-500 leading-relaxed">
-        Scenario Estimate — worked out only from the amounts typed above. It uses no market data and
+        Scenario Estimate: worked out only from the amounts typed above. It uses no market data and
         predicts nothing; real supplier prices, costs and sales volume will differ, so verify them
         before you spend.
       </p>

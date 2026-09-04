@@ -14,7 +14,7 @@ function validate(data) {
   if (!idea) {
     errors.businessIdea = 'Please describe your business idea.'
   } else if (idea.length < 20) {
-    errors.businessIdea = 'Please add a bit more detail \u2014 at least 20 characters.'
+    errors.businessIdea = 'Please add a bit more detail, at least 20 characters.'
   }
   const customer = data.targetCustomer.trim()
   if (!customer) {
@@ -127,7 +127,7 @@ export default function IdeaFormPage() {
               <div className="space-y-6">
 
                 <FormField label="Business Idea" required error={errors.businessIdea}
-                  hint="Describe your idea clearly — what will you sell or offer?">
+                  hint="Describe your idea clearly. What will you sell or offer?">
                   <textarea
                     name="businessIdea"
                     rows={5}
@@ -205,7 +205,7 @@ export default function IdeaFormPage() {
                 </div>
 
                 <FormField label="Additional Information"
-                  hint="Optional — anything else that might help us analyze your idea better.">
+                  hint="Optional: anything else that might help us analyze your idea better.">
                   <textarea
                     name="additionalInfo"
                     rows={3}
