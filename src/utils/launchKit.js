@@ -1,14 +1,19 @@
 import { formatDate } from './format'
 
-// The Launch Kit re-uses what the report already says: `nextActions`, the
-// `launchRoadmap` periods and the `marketingRecommendations`, rendered as tickable
-// steps. It invents no task, cost or date — if the analysis did not say it, the kit
-// does not show it.
+// The Launch Kit re-uses what the report already says: the `launchRoadmap` periods,
+// any `nextActions` the decision card does not already print, and the
+// `marketingRecommendations`, rendered as tickable steps. It invents no task, cost or
+// date — if the analysis did not say it, the kit does not show it.
 //
 // Ids are positions inside the stored analysis, which never changes once saved, so
 // a tick stays attached to the same step after a refresh or a reopen. Each source
 // keeps its own prefix (`n`, `p0`…, `m`) so adding a group can never renumber
 // another group's saved ids.
+
+// The decision card lists the first three nextActions verbatim under "What to do
+// next", so the kit starts after them rather than repeating the same advice twice on
+// one page. Slicing after numbering keeps each saved tick on its own id.
+const DECISION_CARD_ACTION_COUNT = 3
 
 function numbered(value, prefix) {
   if (!Array.isArray(value)) return []
@@ -21,7 +26,7 @@ function numbered(value, prefix) {
 }
 
 export function buildLaunchKit(analysis) {
-  const actions = numbered(analysis && analysis.nextActions, 'n')
+  const actions = numbered(analysis && analysis.nextActions, 'n').slice(DECISION_CARD_ACTION_COUNT)
 
   const phases = (analysis && Array.isArray(analysis.launchRoadmap) ? analysis.launchRoadmap : [])
     .map((step, index) => ({

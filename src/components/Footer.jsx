@@ -1,8 +1,15 @@
+import { useLocation } from 'react-router-dom'
+
 // The landing page shows sample dashboards, so it needs the illustrative wording by
 // default. Pages backed by a real analysis pass their own copy instead.
 export default function Footer({
   disclaimer = 'Sample scores and dashboards shown are illustrative only and do not represent real business analysis.',
 }) {
+  // These section ids only exist on the landing page, so off it the anchor has to
+  // carry the path with it.
+  const { pathname } = useLocation()
+  const anchor = id => (pathname === '/' ? `#${id}` : `/#${id}`)
+
   return (
     <footer className="bg-slate-900 text-slate-400 py-12">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,9 +26,9 @@ export default function Footer({
           </p>
 
           <div className="flex gap-6 text-sm font-medium">
-            <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
-            <a href="#dashboard-preview" className="hover:text-white transition-colors">Preview</a>
-            <a href="#cta" className="hover:text-white transition-colors">Get Started</a>
+            <a href={anchor('how-it-works')} className="hover:text-white transition-colors">How It Works</a>
+            <a href={anchor('dashboard-preview')} className="hover:text-white transition-colors">Preview</a>
+            <a href={anchor('cta')} className="hover:text-white transition-colors">Get Started</a>
           </div>
         </div>
 

@@ -55,6 +55,10 @@ function sentences(value) {
     : []
 }
 
+function normalize(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
 function levelOf(value) {
   const key = String(value || '').trim().toLowerCase()
   return LEVELS.includes(key) ? key : null
@@ -194,6 +198,12 @@ export function deriveDecision(analysis, idea) {
         ? 'Main blocker'
         : 'Main blockers'
 
+  // A competition or market finding can be both the reason behind the score and the
+  // thing to watch, which printed the same sentence twice on one card. The blocker
+  // copy drives the heading, headline and counts, so the repeated factor is dropped.
+  const blockerTexts = new Set(blockers.map(normalize))
+  const visibleFactors = factors.filter(factor => !blockerTexts.has(normalize(factor.text)))
+
   const headline =
     blockers.length === 0 && decision.openHeadline ? decision.openHeadline : decision.headline
 
@@ -202,9 +212,13 @@ export function deriveDecision(analysis, idea) {
       ? 'The analysis did not return a viability score, so there is nothing to base a decision on. The findings below are still worth reading, and a fresh analysis with more detail would let StartupIQ decide.'
       : join([
           `Your viability score of ${score}/100 falls in the ${decision.label} band.`,
-          factors.length > 0
-            ? factors[0].text
-            : 'The analysis returned no supporting detail to explain it with.',
+          // The factor list below already prints these sentences, so the paragraph
+          // only carries the top reason when that list has nothing left to show.
+          visibleFactors.length > 0
+            ? ''
+            : factors[0] && factors[0].text
+              ? factors[0].text
+              : 'The analysis returned no supporting detail to explain it with.',
           blockers.length === 0
             ? key === 'go'
               ? 'Nothing in the analysis blocks a first test.'
@@ -220,7 +234,7 @@ export function deriveDecision(analysis, idea) {
     headline,
     score,
     explanation,
-    factors,
+    factors: visibleFactors,
     blockers,
     blockerHeading,
     nextActions,

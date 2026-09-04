@@ -67,7 +67,7 @@ const OUTPUT_CONTRACT = {
   launchRoadmap: [
     {
       period: 'string, e.g. "Week 1-2"',
-      actions: ['string, one concrete step. If a step names an inventory quantity, it must fit the budget left after fixedCosts at the costEstimate given above, or that same step must say the rest is bought by reinvesting early sales'],
+      actions: ['string, one concrete step. Treat budget minus fixedCosts as ONE pool of cash across the whole roadmap: money an earlier step commits is gone, so no later step may spend that same cash again. If the sequence would exceed the pool, cut a quantity to what fits at costEstimate, or say the rest is funded by reinvesting revenue from a completed earlier step. Label every amount you name as allocated, remaining cash, or revenue to reinvest. Never invent funding, credit or revenue figures.'],
     },
   ],
   nextActions: ['string, one immediate action, ordered by impact'],

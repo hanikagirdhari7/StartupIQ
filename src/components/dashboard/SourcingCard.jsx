@@ -102,11 +102,15 @@ function toneFor(value) {
 // `searchTerms` is still model prose, and it can carry the fulfilment wording meant
 // for the card body — "(Nationwide via courier delivery)" — straight into a search
 // box, where only the product words are useful. Hyphens inside a phrase survive;
-// separators, brackets and delivery qualifiers do not.
+// separators, brackets and delivery qualifiers do not. The bracket patterns allow a
+// missing closer because the model sometimes truncates its own parenthetical, and a
+// half-written "(" would otherwise carry the whole explanation into the query.
 const SEARCH_NOISE = [
-  /\([^)]*\)/g,
+  /\([^)]*\)?/g,
+  /\[[^\]]*\]?/g,
+  /\{[^}]*\}?/g,
   /\b(?:via|by|through)\s+(?:courier|delivery|post|air|sea|road)(?:\s+delivery)?\b/gi,
-  /\b(?:nationwide|countrywide|statewide|door[\s-]*to[\s-]*door(?:\s+(?:delivery|shipping))?|home\s+delivery|cash\s+on\s+delivery|cod)\b/gi,
+  /\b(?:nationwide|countrywide|statewide|door[\s-]*to[\s-]*door(?:\s+(?:delivery|shipping))?|home\s+delivery|online\s+delivery|doorstep\s+delivery|cash\s+on\s+delivery|cod)\b/gi,
   /\b(?:all|everywhere)\s+(?:over|across|in)\s+(?:the\s+)?(?:country|nation|city)\b/gi,
 ]
 
@@ -114,10 +118,12 @@ function cleanSearchTerms(value) {
   let text = String(value || '')
   for (const pattern of SEARCH_NOISE) text = text.replace(pattern, ' ')
   return text
+    .replace(/[()[\]{}]+/g, ' ')
     .replace(/[,;:.!?]+/g, ' ')
+    .replace(/\s+[-–—/|]\s+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
-    .replace(/^[-/&]+|[-/&]+$/g, '')
+    .replace(/^[-–—/&]+|[-–—/&]+$/g, '')
     .trim()
 }
 

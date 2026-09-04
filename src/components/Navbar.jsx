@@ -1,6 +1,12 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
+// The section ids only exist on the landing page, so off it the anchor has to carry
+// the path with it. On the landing page a bare #id is kept, because that is what
+// makes the browser scroll in place.
 export default function Navbar() {
+  const { pathname } = useLocation()
+  const anchor = id => (pathname === '/' ? `#${id}` : `/#${id}`)
+
   return (
     <nav aria-label="Main" className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,8 +18,8 @@ export default function Navbar() {
             <span className="text-xl font-bold text-slate-900">StartupIQ</span>
           </Link>
           <div className="hidden md:flex items-center gap-8">
-            <a href="#how-it-works" className="text-sm text-slate-600 hover:text-accent-600 transition-colors">How It Works</a>
-            <a href="#dashboard-preview" className="text-sm text-slate-600 hover:text-accent-600 transition-colors">Preview</a>
+            <a href={anchor('how-it-works')} className="text-sm text-slate-600 hover:text-accent-600 transition-colors">How It Works</a>
+            <a href={anchor('dashboard-preview')} className="text-sm text-slate-600 hover:text-accent-600 transition-colors">Preview</a>
           </div>
           <Link
             to="/validate"
