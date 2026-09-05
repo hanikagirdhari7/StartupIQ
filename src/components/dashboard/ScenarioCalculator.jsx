@@ -100,8 +100,17 @@ export default function ScenarioCalculator({ financialFit, budget }) {
     : null
   const afterSetup = funds !== null && fixed !== null ? funds - fixed : null
 
+  // Only the row that can use a missing amount asks for it; the rows derived from
+  // the profit say what they are waiting on. That keeps one sentence from printing
+  // three times and stops a filled input being named as missing.
+  const missingPerSale =
+    price === null && cost === null ? 'a selling price and a cost per sale'
+      : price === null ? 'a selling price'
+        : cost === null ? 'a cost per sale'
+          : null
+
   const recoverGap =
-    profit === null ? 'Enter a selling price and a cost per sale.'
+    profit === null ? 'Needs the profit per sale before setup costs can be recovered.'
       : profit <= 0 ? 'There is no profit at these numbers, so nothing recovers setup costs yet.'
         : fixed === null ? 'Enter your setup costs to see how many sales recover them.'
           : 'Your setup costs are 0, so there is nothing to recover.'
@@ -112,13 +121,13 @@ export default function ScenarioCalculator({ financialFit, budget }) {
   const results = [
     {
       label: 'Estimated margin per sale',
-      value: profit === null ? missing('Enter a selling price and a cost per sale.') : { text: formatPKR(profit) },
+      value: profit === null ? missing(`Enter ${missingPerSale}.`) : { text: formatPKR(profit) },
       note: profit === null ? null : `${formatPKR(price)} minus ${formatPKR(cost)}.`,
     },
     {
       label: 'Margin on each sale',
       value: margin === null
-        ? missing(profit === null ? 'Enter a selling price and a cost per sale.' : 'Needs a selling price above 0.')
+        ? missing(profit === null ? 'Waiting for the profit per sale.' : 'Needs a selling price above 0.')
         : { text: `${Math.round(margin)}%` },
       note: margin === null ? null : 'Share of each sale left after its full cost.',
     },

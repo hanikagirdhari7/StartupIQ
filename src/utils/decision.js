@@ -9,6 +9,10 @@ import { formatPKR } from './format'
 // A field that is missing is skipped, and a report with no score at all gets
 // no decision rather than a guessed one.
 
+// The decision card prints this many nextActions, and launchKit.js skips exactly
+// this many, so the same advice never appears twice on one page.
+export const DECISION_CARD_ACTION_COUNT = 3
+
 const STATUS_LABELS = {
   goodToTest: 'The financial fit looks good enough to test',
   needsCaution: 'The financial fit needs caution',
@@ -145,7 +149,7 @@ export function deriveDecision(analysis, idea) {
   const pricing = data.pricingRecommendation || {}
   const fit = data.financialFit || {}
   const risks = sentences(data.risks)
-  const nextActions = sentences(data.nextActions).slice(0, 3)
+  const nextActions = sentences(data.nextActions).slice(0, DECISION_CARD_ACTION_COUNT)
 
   const score = number(data.viabilityScore)
   const budget = number(idea && idea.budgetPKR)
