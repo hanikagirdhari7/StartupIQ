@@ -10,9 +10,9 @@ import { buildCoachContext } from '../services/coachContext'
 // Calculator render exactly as they did before this component existed.
 
 const STARTERS = [
-  'Is budget mein pehle 50 sales kaise lau?',
-  'Customs / freight risk ko kaise kam karu?',
-  'Marketing strategy ko step-by-step explain karo.',
+  'Is this idea worth launching?',
+  'How can I reduce my biggest risk?',
+  'What would you change before launch?',
 ]
 
 function Bubble({ message }) {
@@ -200,11 +200,10 @@ export default function AICoach({ reportData }) {
               <div className="space-y-3">
                 <p className="flex items-center gap-2 text-sm font-bold text-slate-700">
                   <MessagesSquare size={15} strokeWidth={1.75} className="text-accent-600" aria-hidden="true" />
-                  Ask about anything in this report
+                  What would you like to know?
                 </p>
                 <p className="text-xs leading-relaxed text-slate-500">
-                  Ask IQ reads the figures on this page and answers in your language. Type your own
-                  question, or start with one of these:
+                  Ask IQ reads your report and gives practical answers in your language. Ask anything about your business—or start with a question below.
                 </p>
                 <div className="space-y-2 pt-1">
                   {STARTERS.map(question => (
