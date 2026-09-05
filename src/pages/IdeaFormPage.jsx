@@ -109,8 +109,7 @@ export default function IdeaFormPage() {
           {/* Page header */}
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 bg-accent-50 border border-accent-200 text-accent-700 text-sm font-medium px-4 py-1.5 rounded-full mb-5">
-              <span className="w-2 h-2 bg-accent-500 rounded-full animate-pulse" />
-              Step 1 of 4
+              Free · No Sign-Up Required
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3 leading-tight tracking-tight">
               Tell Us About Your Idea
