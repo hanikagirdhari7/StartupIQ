@@ -152,7 +152,7 @@ export default function ScenarioCalculator({ financialFit, budget }) {
   ]
 
   return (
-    <div className="mt-6 rounded-2xl border border-accent-100 bg-accent-50/50 p-5 sm:p-6">
+    <div id="scenario-calculator" className="mt-6 rounded-2xl border border-accent-100 bg-accent-50/50 p-5 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
         <h4 className="flex items-center gap-2 text-base font-extrabold text-slate-900">
           <Calculator size={16} strokeWidth={1.75} className="text-accent-600 shrink-0" aria-hidden="true" />

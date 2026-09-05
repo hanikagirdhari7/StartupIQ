@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronDown, CircleAlert, CircleCheck, Info, Lightbulb, TriangleAlert, Wallet } from 'lucide-react'
+import { ArrowRight, ChevronDown, CircleAlert, CircleCheck, Info, Lightbulb, TriangleAlert, Wallet } from 'lucide-react'
 import ScenarioCalculator from './ScenarioCalculator'
 import SourceTag from './SourceTag'
 import { formatPKR as money } from '../../utils/format'
@@ -84,6 +84,8 @@ export default function FinancialFitCard({ financialFit, budget }) {
           : 'Your fixed setup costs are 0, so there is nothing to recover: every sale is ahead from the first one.'
     : null
 
+  const hasGaps = cost === null || profit === null || fixed === null || !breakEven
+
   return (
     <section className="surface-card p-6 sm:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
@@ -133,6 +135,16 @@ export default function FinancialFitCard({ financialFit, budget }) {
           muted={!breakEven}
         />
       </dl>
+
+      {hasGaps && (
+        <a
+          href="#scenario-calculator"
+          className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-accent-200 bg-accent-50 px-3.5 py-1.5 text-sm font-semibold text-accent-700 transition-colors hover:bg-accent-100 hover:text-accent-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-600"
+        >
+          Want to estimate your numbers? Try the Scenario Calculator
+          <ArrowRight size={15} strokeWidth={2.25} className="shrink-0" aria-hidden="true" />
+        </a>
+      )}
 
       <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50/70 p-4">
         <p className="flex items-center gap-1.5 meta-label mb-1.5">
