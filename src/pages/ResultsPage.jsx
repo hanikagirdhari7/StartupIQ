@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
+import AICoach from '../components/AICoach'
 import DecisionCard from '../components/dashboard/DecisionCard'
 import FinancialFitCard from '../components/dashboard/FinancialFitCard'
 import InsightCard, { InsightRow, LevelBadge } from '../components/dashboard/InsightCard'
@@ -109,6 +110,8 @@ export default function ResultsPage() {
           <DecisionCard analysis={analysis} idea={idea} />
 
           <RecentReportsCard currentId={currentId} />
+
+          <AICoach key={`coach-${currentId}`} reportData={report} />
 
           <div className="bg-accent-600 rounded-card shadow-raise p-6 sm:p-8">
             <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-2">Ready for the next step?</h2>

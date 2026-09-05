@@ -1,11 +1,15 @@
 import express from 'express'
 import analyzeRoutes from './routes/analyze.js'
+import coachRoutes from './routes/coach.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
 
 app.use(express.json({ limit: '100kb' }))
 app.use('/api', analyzeRoutes)
+// Ask IQ's router is mounted separately so /api/analyze keeps its own file,
+// middleware order and behaviour untouched.
+app.use('/api', coachRoutes)
 
 app.use((req, res) => {
   res.status(404).json({
