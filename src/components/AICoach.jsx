@@ -13,6 +13,7 @@ const STARTERS = [
   'Is this idea worth launching?',
   'How can I reduce my biggest risk?',
   'What would you change before launch?',
+  'Explain the marketing strategy step-by-step.',
 ]
 
 function Bubble({ message }) {
